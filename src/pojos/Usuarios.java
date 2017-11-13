@@ -5,6 +5,8 @@
  */
 package pojos;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -15,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -31,6 +34,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Usuarios.findByUsuario", query = "SELECT u FROM Usuarios u WHERE u.usuario = :usuario")
     , @NamedQuery(name = "Usuarios.findByPassw", query = "SELECT u FROM Usuarios u WHERE u.passw = :passw")})
 public class Usuarios implements Serializable {
+
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -57,7 +63,9 @@ public class Usuarios implements Serializable {
     }
 
     public void setIdusuario(Integer idusuario) {
+        Integer oldIdusuario = this.idusuario;
         this.idusuario = idusuario;
+        changeSupport.firePropertyChange("idusuario", oldIdusuario, idusuario);
     }
 
     public String getNombre() {
@@ -65,7 +73,9 @@ public class Usuarios implements Serializable {
     }
 
     public void setNombre(String nombre) {
+        String oldNombre = this.nombre;
         this.nombre = nombre;
+        changeSupport.firePropertyChange("nombre", oldNombre, nombre);
     }
 
     public String getUsuario() {
@@ -73,7 +83,9 @@ public class Usuarios implements Serializable {
     }
 
     public void setUsuario(String usuario) {
+        String oldUsuario = this.usuario;
         this.usuario = usuario;
+        changeSupport.firePropertyChange("usuario", oldUsuario, usuario);
     }
 
     public String getPassw() {
@@ -81,7 +93,9 @@ public class Usuarios implements Serializable {
     }
 
     public void setPassw(String passw) {
+        String oldPassw = this.passw;
         this.passw = passw;
+        changeSupport.firePropertyChange("passw", oldPassw, passw);
     }
 
     @Override
@@ -107,6 +121,14 @@ public class Usuarios implements Serializable {
     @Override
     public String toString() {
         return "pojos.Usuarios[ idusuario=" + idusuario + " ]";
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

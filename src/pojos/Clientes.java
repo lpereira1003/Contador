@@ -5,6 +5,8 @@
  */
 package pojos;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -17,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -33,8 +36,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Clientes.findByNit", query = "SELECT c FROM Clientes c WHERE c.nit = :nit")
     , @NamedQuery(name = "Clientes.findByNrc", query = "SELECT c FROM Clientes c WHERE c.nrc = :nrc")
     , @NamedQuery(name = "Clientes.findByGcontrib", query = "SELECT c FROM Clientes c WHERE c.gcontrib = :gcontrib")
-    , @NamedQuery(name = "Clientes.findByIdclien", query = "SELECT c FROM Clientes c WHERE c.idclien = :idclien")})
+    , @NamedQuery(name = "Clientes.findByIdclien", query = "SELECT c FROM Clientes c WHERE c.idclien = :idclien")
+    , @NamedQuery(name = "Clientes.findByGiro", query = "SELECT c FROM Clientes c WHERE c.giro = :giro")})
 public class Clientes implements Serializable {
+
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
     private static final long serialVersionUID = 1L;
     @Column(name = "nombre")
@@ -50,6 +57,8 @@ public class Clientes implements Serializable {
     @Basic(optional = false)
     @Column(name = "idclien")
     private Integer idclien;
+    @Column(name = "giro")
+    private String giro;
     @OneToMany(mappedBy = "idproveedor")
     private Collection<Compras> comprasCollection;
     @OneToMany(mappedBy = "idcliente")
@@ -67,7 +76,9 @@ public class Clientes implements Serializable {
     }
 
     public void setNombre(String nombre) {
+        String oldNombre = this.nombre;
         this.nombre = nombre;
+        changeSupport.firePropertyChange("nombre", oldNombre, nombre);
     }
 
     public String getNit() {
@@ -75,7 +86,9 @@ public class Clientes implements Serializable {
     }
 
     public void setNit(String nit) {
+        String oldNit = this.nit;
         this.nit = nit;
+        changeSupport.firePropertyChange("nit", oldNit, nit);
     }
 
     public String getNrc() {
@@ -83,7 +96,9 @@ public class Clientes implements Serializable {
     }
 
     public void setNrc(String nrc) {
+        String oldNrc = this.nrc;
         this.nrc = nrc;
+        changeSupport.firePropertyChange("nrc", oldNrc, nrc);
     }
 
     public Boolean getGcontrib() {
@@ -91,7 +106,9 @@ public class Clientes implements Serializable {
     }
 
     public void setGcontrib(Boolean gcontrib) {
+        Boolean oldGcontrib = this.gcontrib;
         this.gcontrib = gcontrib;
+        changeSupport.firePropertyChange("gcontrib", oldGcontrib, gcontrib);
     }
 
     public Integer getIdclien() {
@@ -99,7 +116,19 @@ public class Clientes implements Serializable {
     }
 
     public void setIdclien(Integer idclien) {
+        Integer oldIdclien = this.idclien;
         this.idclien = idclien;
+        changeSupport.firePropertyChange("idclien", oldIdclien, idclien);
+    }
+
+    public String getGiro() {
+        return giro;
+    }
+
+    public void setGiro(String giro) {
+        String oldGiro = this.giro;
+        this.giro = giro;
+        changeSupport.firePropertyChange("giro", oldGiro, giro);
     }
 
     @XmlTransient
@@ -143,6 +172,14 @@ public class Clientes implements Serializable {
     @Override
     public String toString() {
         return "pojos.Clientes[ idclien=" + idclien + " ]";
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

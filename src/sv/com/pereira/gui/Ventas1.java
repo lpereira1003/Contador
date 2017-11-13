@@ -13,7 +13,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -754,7 +753,6 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         EntityManagerFactory emf = createEntityManagerFactory("ContadorPU");
         EntityManager em = emf.createEntityManager();
-        //campoGravado.setText("0.00");
         Impuestos impuestos = em.find(Impuestos.class, 7);
         Double valorIVA = impuestos.getIva();
         Double valorPercepcion = impuestos.getPercepcion();
@@ -774,7 +772,6 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         }
         
         String gContrEmpresa = tablaEmpresas.getValueAt(filaEmpresas, 3).toString();
-     
         campoGravado.addKeyListener(new KeyAdapter()
         {
             @Override
@@ -793,21 +790,17 @@ public class Ventas1 extends javax.swing.JInternalFrame {
                if((chkTKT.isSelected()||chkFCF.isSelected())){
                    double gravado1 = gravado/valorConversion;
                    CampoIva.setText("" + format("%.2f", gravado1));
-                   
                    double iva1 = gravado-(gravado/valorConversion);
                     percepcion=0.00;
                     campoPercepcion.setText("" + format("%.2f", iva1));
-                    
                      ventaTotal=gravado1+iva1+percepcion;
                      campoTotalVta.setText("" + format("%.2f", ventaTotal));
-                   // ventaTotal=iva+
                }
                if(chkCCF.isSelected() ){
                    int filaClientes = tablaClientes.getSelectedRow();
                    int filaEmpresas = tablaEmpresas.getSelectedRow();
                    String gContrCliente1 = tablaClientes.getValueAt(filaClientes, 3).toString();
                    String gContrEmpresa1 = tablaEmpresas.getValueAt(filaEmpresas, 3).toString();
-                   //System.out.println("es cliente gran contribuyente?? "+gContrCliente);
                    if((gContrEmpresa1.equals("true")&& gContrCliente1.equals("false")) && gravado>=100.00 ){
                      percepcion=gravado*valorPercepcion;
                      iva=gravado*valorIVA;
@@ -823,7 +816,6 @@ public class Ventas1 extends javax.swing.JInternalFrame {
                      CampoIva.setText("" + format("%.2f", iva));
                      campoPercepcion.setText("" + format("%.2f", percepcion));
                      campoTotalVta.setText("" + format("%.2f", ventaTotal));
-                       
                    }
                    if(gContrEmpresa.equals("true")&&gContrCliente1.equals("true") ){
                        percepcion=0.00;
@@ -833,7 +825,6 @@ public class Ventas1 extends javax.swing.JInternalFrame {
                         campoPercepcion.setText("" + format("%.2f", percepcion));
                         campoTotalVta.setText("" + format("%.2f", ventaTotal));
                    }
-                   
                }
             }   
          });  
@@ -843,6 +834,29 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         EntityManagerFactory emf = createEntityManagerFactory("ContadorPU");
         EntityManager em = emf.createEntityManager();
+        int filaEmpresa = tablaEmpresas.getSelectedRow();
+        int filaClientes1 = tablaClientes.getSelectedRow();
+        if(filaEmpresa==-1){
+           JOptionPane.showMessageDialog(this,"Seleccione empresa");
+           limpiarcamposTransacciones();
+           return;
+        }
+        if(campoDocVta.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "ingrese # de documento de Vta");
+            campoDocVta.requestFocus();
+            return;
+        }
+        boolean tkt = chkTKT.isSelected();
+        boolean fcf = chkFCF.isSelected();
+        boolean ccf = chkCCF.isSelected();
+        if((tkt==false) && (fcf==false) && (ccf==false)){
+          JOptionPane.showMessageDialog(this, "Seleccione el TIPO Vta");            
+            return;
+        }
+        if(chkCCF.isSelected()&& filaClientes1==-1){
+            JOptionPane.showMessageDialog(this, "Seleccione CLIENTE para esta VENTA");
+            return;
+        }
         Calendar now = Calendar.getInstance();
         int mesActual = now.get(Calendar.MONTH)+1;
         int ventaAnticipada = mesActual+1;
@@ -853,19 +867,10 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         if(mesActual==mesdigita){
             JOptionPane.showMessageDialog(this,"Ha ingresado una venta anticipada..... \n"
                                              + "La transaccion sera mostrada en mes... " +ventaAnticipada);
-                                             
-            //limpiarCamposTotales();
             limpiarcamposTransacciones();
-            //return;
         }
-        int fila = tablaEmpresas.getSelectedRow();
-        if(fila==-1){
-           JOptionPane.showMessageDialog(this,"Seleccione empresa");
-           limpiarcamposTransacciones();
-           return;
-        }
-      
-       Ventas ventas = new Ventas();
+        
+        Ventas ventas = new Ventas();
         if(chkTKT.isSelected()||chkFCF.isSelected()){
            ventas.setIdcliente(null);
         }else{// seleccionar de tabla clientes
@@ -878,11 +883,8 @@ public class Ventas1 extends javax.swing.JInternalFrame {
        int filaClientes = tablaEmpresas.getSelectedRow();
        String idempresa = tablaEmpresas.getValueAt(filaClientes, 0).toString();
        int idempresa1 = Integer.parseInt(idempresa);
-             //Clientes clienteid = em.find(Clientes.class,idcliente1 );
        Empresas empresaid=em.find(Empresas.class, idempresa1);
        ventas.setIdempresa(empresaid);
-                
-       
        if(chkTKT.isSelected()){
             ventas.setTipoventa("TKT");
             ventas.setGravado(new BigDecimal(CampoIva.getText()));
@@ -903,6 +905,7 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             ventas.setValorventa(new BigDecimal(campoTotalVta.getText()));
             ventas.setValoriva(new BigDecimal(CampoIva.getText()));
             ventas.setValorpercepcion(new BigDecimal(campoPercepcion.getText()));
+            incrementaDoc();
        }
       
        ventas.setFechaventa(calendario.getDate());
@@ -919,7 +922,7 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         }
         
         limpiarcamposTransacciones();
-        incrementaDoc();
+        
         try {
             cargarDatadigitada();
         } catch (ParseException ex) {
@@ -1111,18 +1114,14 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         viewer.setTitle("Reporte ventas a Consumidor Final");
         viewer.setSize(900, 600);
         viewer.setVisible(true);
-            
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(this,"No encuentro archivo de Reporte");
         }
         try {
-            //database.desconectar();
             conn.close();
         } catch (SQLException ex) {
-            
             JOptionPane.showMessageDialog(this,"Error en Base de datos");
         }
-       
     }//GEN-LAST:event_btnConsuFinalActionPerformed
 
     private void btnCreditoFiscalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreditoFiscalActionPerformed
@@ -1158,19 +1157,15 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         viewer.setTitle("Reporte ventas a Contribuyentes");
         viewer.setSize(1100, 600);
         viewer.setVisible(true);
-            
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(this,"No encuentro archivo de Reporte");
         }
         try {
-            //database.desconectar();
             conn.close();
         } catch (SQLException ex) {
             
             JOptionPane.showMessageDialog(this,"Error en Base de datos");
         }
-//        JOptionPane.showMessageDialog(this,"Pendiente codificacion" );
-//        return;
     }//GEN-LAST:event_btnCreditoFiscalActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -1245,14 +1240,12 @@ public class Ventas1 extends javax.swing.JInternalFrame {
     campoTotalVta.setText("0.00");
     campoPercepcion.setText("0.00");
     campoGravado.requestFocus();
-//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void incrementaDoc() {
         int correlativo = Integer.parseInt(campoDocVta.getText());
         correlativo=correlativo+1;
         campoDocVta.setText(""+correlativo);
-//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void cargarDatadigitada() throws ParseException {
@@ -1260,7 +1253,6 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         EntityManager em = emf.createEntityManager();
         int filaempresa = tablaEmpresas.getSelectedRow();
         String idempresa = tablaEmpresas.getValueAt(filaempresa, 2).toString();
-        //int idempresa1 = Integer.parseInt(idempresa);
         String nombreEmpresa = tablaEmpresas.getValueAt(filaempresa, 1).toString();
         lblDataIng.setText("Datos Ingresados a:  ".concat(nombreEmpresa));
         double totalPercepcion = 0.00;
@@ -1279,7 +1271,6 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             tipovta="CCF";
         }
         Calendar now = Calendar.getInstance();
- 
 		System.out.println("Fecha actual  " +(now.get(Calendar.MONTH) + 1));
                 System.out.println("mes venta   = " +(now.get(Calendar.MONTH)));
         try {//limpiando tabla ventas para CCF
@@ -1290,39 +1281,30 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             }
         } catch (Exception e) {
         }
-       // @NamedQuery(name="querybymonth", query="select t from table1 t where MONTH(c_Date) = 5")
          Query query;
         query = em.createQuery("Select v from Ventas v where (v.idempresa.ncr = :empresabuscar) AND v.tipoventa = :tipovta")
                 .setParameter("empresabuscar", idempresa)
                 .setParameter("tipovta", tipovta) ;
-                //.setParameter("mesdigitacion",now.get(Calendar.MONTH));
       List<Ventas> list=query.getResultList();
         int mesDigitado = now.get(Calendar.MONTH);
       for(Ventas ventas:list)
       {
-//             fechaD = Month(ventas.getFechadigita());
-            //mesVta = new Timestamp(ventas.getFechadigita());
-            
-//            int mesVta1 = mesVta.getMonth();
-//            int mesVta2 = mesVta1+2;// igualo mes ventas a mes digitacion
-            
             Date fechaVenta = ventas.getFechaventa();
             System.out.println(" fecha de venta es "+fechaVenta);
             int mesdid = fechaVenta.getMonth()+1;
             System.out.println("mes de la venta es "+mesdid);
             int mesVta=now.get(Calendar.MONTH);
             System.out.println("MES ACTUAL ES "+mesVta);
-            if(mesdid==mesVta){
-                
-            
-            String idvta = ventas.getIdventa().toString();
-            String nomEmpresa = ventas.getIdempresa().getNombre();
-            String numDoc = ventas.getNumdocvta();
-            String tipoVta = ventas.getTipoventa();
-            String grav = ventas.getGravado().toString();
-            String iva = ventas.getValoriva().toString();
-            String percep = ventas.getValorpercepcion().toString();
-            String percep1 = ventas.getValorventa().toString();
+            if(mesdid==mesVta)
+            {
+                String idvta = ventas.getIdventa().toString();
+                String nomEmpresa = ventas.getIdempresa().getNombre();
+                String numDoc = ventas.getNumdocvta();
+                String tipoVta = ventas.getTipoventa();
+                String grav = ventas.getGravado().toString();
+                String iva = ventas.getValoriva().toString();
+                String percep = ventas.getValorpercepcion().toString();
+                String percep1 = ventas.getValorventa().toString();
                 Object FilaElemento[] = {idvta, nomEmpresa, numDoc, tipoVta, grav, iva, percep, percep1 };
                 tablaFactura.addRow(FilaElemento);
                 totalIva=totalIva+Double.parseDouble(iva);
@@ -1333,7 +1315,7 @@ public class Ventas1 extends javax.swing.JInternalFrame {
                 campoTotalIva.setText(""+format("%.2f",totalIva));
                 campoTotalPercepcion.setText(""+format("%.2f",totalPercepcion));
                 campoTotalTotales.setText(""+format("%.2f",totalVentas));
-      }
+            }
       }
     }
 

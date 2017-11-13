@@ -14,10 +14,10 @@ import javax.swing.RowFilter;
 import static javax.swing.RowFilter.orFilter;
 import static javax.swing.RowFilter.regexFilter;
 import javax.swing.table.TableRowSorter;
-import pojos.Empresas;
+import pojos.Clientes;
 
-public class Empresas1 extends javax.swing.JInternalFrame {
-    public Empresas1() {
+public class Contribuyentes extends javax.swing.JInternalFrame {
+    public Contribuyentes() {
         initComponents();
     }
 
@@ -27,12 +27,12 @@ public class Empresas1 extends javax.swing.JInternalFrame {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         ContadorPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("ContadorPU").createEntityManager();
-        empresasQuery = java.beans.Beans.isDesignTime() ? null : ContadorPUEntityManager.createQuery("SELECT e FROM Empresas e");
-        empresasList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : empresasQuery.getResultList();
         grupoTipoVtas = new javax.swing.ButtonGroup();
+        clientesQuery = java.beans.Beans.isDesignTime() ? null : ContadorPUEntityManager.createQuery("SELECT c FROM Clientes c");
+        clientesList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clientesQuery.getResultList();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaEmpresas = new javax.swing.JTable();
+        tablaContribuyentes = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         campoSeleccionEmpresa = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
@@ -58,7 +58,7 @@ public class Empresas1 extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("** Empresas**");
+        setTitle("** Contribuyentes**");
         setToolTipText("");
         setAutoscrolls(true);
         try {
@@ -88,68 +88,62 @@ public class Empresas1 extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Empresas");
+        jLabel1.setText("Contribuyentes");
         jLabel1.setToolTipText("");
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 255, 51), null));
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        tablaEmpresas.setAutoCreateRowSorter(true);
+        tablaContribuyentes.setAutoCreateRowSorter(true);
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, empresasList, tablaEmpresas);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idempresa}"));
-        columnBinding.setColumnName("Idemp");
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, clientesList, tablaContribuyentes);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idclien}"));
+        columnBinding.setColumnName("Idclien");
         columnBinding.setColumnClass(Integer.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nombre}"));
         columnBinding.setColumnName("Nombre");
         columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${giro}"));
         columnBinding.setColumnName("Giro");
         columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${ncr}"));
-        columnBinding.setColumnName("Ncr");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nrc}"));
+        columnBinding.setColumnName("Nrc");
         columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nit}"));
-        columnBinding.setColumnName("NIT");
+        columnBinding.setColumnName("Nit");
         columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${gcontrib}"));
-        columnBinding.setColumnName("G.Cont");
+        columnBinding.setColumnName("Gcontrib");
         columnBinding.setColumnClass(Boolean.class);
-        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
-        tablaEmpresas.addMouseListener(new java.awt.event.MouseAdapter() {
+        tablaContribuyentes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaEmpresasMouseClicked(evt);
+                tablaContribuyentesMouseClicked(evt);
             }
         });
-        tablaEmpresas.addKeyListener(new java.awt.event.KeyAdapter() {
+        tablaContribuyentes.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                tablaEmpresasKeyPressed(evt);
+                tablaContribuyentesKeyPressed(evt);
             }
         });
-        jScrollPane1.setViewportView(tablaEmpresas);
-        if (tablaEmpresas.getColumnModel().getColumnCount() > 0) {
-            tablaEmpresas.getColumnModel().getColumn(0).setMinWidth(50);
-            tablaEmpresas.getColumnModel().getColumn(0).setPreferredWidth(50);
-            tablaEmpresas.getColumnModel().getColumn(0).setMaxWidth(50);
-            tablaEmpresas.getColumnModel().getColumn(3).setMinWidth(75);
-            tablaEmpresas.getColumnModel().getColumn(3).setPreferredWidth(75);
-            tablaEmpresas.getColumnModel().getColumn(3).setMaxWidth(75);
-            tablaEmpresas.getColumnModel().getColumn(5).setMinWidth(75);
-            tablaEmpresas.getColumnModel().getColumn(5).setPreferredWidth(50);
-            tablaEmpresas.getColumnModel().getColumn(5).setMaxWidth(75);
+        jScrollPane1.setViewportView(tablaContribuyentes);
+        if (tablaContribuyentes.getColumnModel().getColumnCount() > 0) {
+            tablaContribuyentes.getColumnModel().getColumn(0).setMinWidth(50);
+            tablaContribuyentes.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tablaContribuyentes.getColumnModel().getColumn(0).setMaxWidth(50);
+            tablaContribuyentes.getColumnModel().getColumn(3).setMinWidth(75);
+            tablaContribuyentes.getColumnModel().getColumn(3).setPreferredWidth(75);
+            tablaContribuyentes.getColumnModel().getColumn(3).setMaxWidth(75);
+            tablaContribuyentes.getColumnModel().getColumn(5).setMinWidth(75);
+            tablaContribuyentes.getColumnModel().getColumn(5).setPreferredWidth(50);
+            tablaContribuyentes.getColumnModel().getColumn(5).setMaxWidth(75);
         }
 
         jLabel2.setBackground(new java.awt.Color(0, 255, 0));
         jLabel2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(153, 0, 51));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Empresas");
+        jLabel2.setText("Contribuyentes");
         jLabel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         campoSeleccionEmpresa.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -208,9 +202,8 @@ public class Empresas1 extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(PanelIngresaDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(chkGContrib)
-                    .addGroup(PanelIngresaDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(campoNCR, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                        .addComponent(campoNIT, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(campoNCR, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                    .addComponent(campoNIT)
                     .addComponent(campoNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
                     .addComponent(campoGiro))
                 .addGap(10, 10, 10))
@@ -242,7 +235,7 @@ public class Empresas1 extends javax.swing.JInternalFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Opciones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Arial", 1, 12))); // NOI18N
 
         grupoTipoVtas.add(rbNueva);
-        rbNueva.setText("Nueva");
+        rbNueva.setText("Nuevo");
         rbNueva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbNuevaActionPerformed(evt);
@@ -381,29 +374,29 @@ public class Empresas1 extends javax.swing.JInternalFrame {
                 trs.setRowFilter(orFilter(filtros));
             }
         });
-        trs = new TableRowSorter(tablaEmpresas.getModel());
-        tablaEmpresas.setRowSorter(trs);  
-        tablaEmpresas/**/.selectAll();
+        trs = new TableRowSorter(tablaContribuyentes.getModel());
+        tablaContribuyentes.setRowSorter(trs);  
+        tablaContribuyentes/**/.selectAll();
     }//GEN-LAST:event_campoSeleccionEmpresaKeyTyped
 
-    private void tablaEmpresasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaEmpresasKeyPressed
+    private void tablaContribuyentesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaContribuyentesKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tablaEmpresasKeyPressed
+    }//GEN-LAST:event_tablaContribuyentesKeyPressed
 
-    private void tablaEmpresasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaEmpresasMouseClicked
-        int filaEmpresas = tablaEmpresas.getSelectedRow();
-        campoNombre.setText(tablaEmpresas.getValueAt(filaEmpresas, 1).toString());
-        campoGiro.setText(tablaEmpresas.getValueAt(filaEmpresas, 2).toString());
-        campoNCR.setText(tablaEmpresas.getValueAt(filaEmpresas, 3).toString());
-        campoNIT.setText(tablaEmpresas.getValueAt(filaEmpresas, 4).toString());
-        String estadoContr = tablaEmpresas.getValueAt(filaEmpresas, 5).toString();
+    private void tablaContribuyentesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaContribuyentesMouseClicked
+        int filaEmpresas = tablaContribuyentes.getSelectedRow();
+        campoNombre.setText(tablaContribuyentes.getValueAt(filaEmpresas, 1).toString());
+        campoGiro.setText(tablaContribuyentes.getValueAt(filaEmpresas, 2).toString());
+        campoNCR.setText(tablaContribuyentes.getValueAt(filaEmpresas, 3).toString());
+        campoNIT.setText(tablaContribuyentes.getValueAt(filaEmpresas, 4).toString());
+        String estadoContr = tablaContribuyentes.getValueAt(filaEmpresas, 5).toString();
         if(estadoContr.equals("true")){
            chkGContrib.setSelected(true); 
         }
         else {
             chkGContrib.setSelected(false);
         }
-    }//GEN-LAST:event_tablaEmpresasMouseClicked
+    }//GEN-LAST:event_tablaContribuyentesMouseClicked
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
@@ -451,16 +444,16 @@ public class Empresas1 extends javax.swing.JInternalFrame {
             return;
         }
         if(rbNueva.isSelected()){
-            Empresas empresa = new Empresas();
-            empresa.setNombre(campoNombre.getText());
-            empresa.setGiro(campoGiro.getText());
-            empresa.setNit(campoNIT.getText());
-            empresa.setNcr(campoNCR.getText());
-            empresa.setGcontrib(chkGContrib.isSelected());
+            Clientes cliente = new Clientes();
+            cliente.setNombre(campoNombre.getText());
+            cliente.setGiro(campoGiro.getText());
+            cliente.setNit(campoNIT.getText());
+            cliente.setNrc(campoNCR.getText());
+            cliente.setGcontrib(chkGContrib.isSelected());
             EntityTransaction tx = em.getTransaction();
             tx.begin();
             try {
-             em.persist(empresa);
+             em.persist(cliente);
              tx.commit();
             } catch (Exception e) {
               e.printStackTrace();
@@ -469,19 +462,19 @@ public class Empresas1 extends javax.swing.JInternalFrame {
             limpiarCampos();
         }
         if(rbModificar.isSelected()){
-            int filaEmpresas = tablaEmpresas.getSelectedRow();
-            String idEmpresa = tablaEmpresas.getValueAt(filaEmpresas, 0).toString();
+            int filaEmpresas = tablaContribuyentes.getSelectedRow();
+            String idEmpresa = tablaContribuyentes.getValueAt(filaEmpresas, 0).toString();
             int idEmpresa1 = Integer.parseInt(idEmpresa);
             EntityTransaction tx = em.getTransaction();
-            Empresas empresa = em.find(Empresas.class, idEmpresa1);
-            empresa.setNombre(campoNombre.getText());
-            empresa.setGiro(campoGiro.getText());
-            empresa.setNit(campoNIT.getText());
-            empresa.setNcr(campoNCR.getText());
-            empresa.setGcontrib(chkGContrib.isSelected());
+            Clientes cliente = em.find(Clientes.class, idEmpresa1);
+            cliente.setNombre(campoNombre.getText());
+            cliente.setGiro(campoGiro.getText());
+            cliente.setNit(campoNIT.getText());
+            cliente.setNrc(campoNCR.getText());
+            cliente.setGcontrib(chkGContrib.isSelected());
             tx.begin();
             try {
-               em.persist(empresa);
+               em.persist(cliente);
                tx.commit();
             } catch (Exception e) {
                e.printStackTrace();
@@ -513,8 +506,8 @@ public class Empresas1 extends javax.swing.JInternalFrame {
     private javax.swing.JTextField campoNombre;
     private javax.swing.JTextField campoSeleccionEmpresa;
     private javax.swing.JCheckBox chkGContrib;
-    private java.util.List<pojos.Empresas> empresasList;
-    private javax.persistence.Query empresasQuery;
+    private java.util.List<pojos.Clientes> clientesList;
+    private javax.persistence.Query clientesQuery;
     private javax.swing.ButtonGroup grupoTipoVtas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
@@ -527,64 +520,66 @@ public class Empresas1 extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JRadioButton rbModificar;
     private javax.swing.JRadioButton rbNueva;
-    private javax.swing.JTable tablaEmpresas;
+    private javax.swing.JTable tablaContribuyentes;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
     private void actualizarTablaEmpresas() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
+       bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
+
         ContadorPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("ContadorPU").createEntityManager();
-        empresasQuery = java.beans.Beans.isDesignTime() ? null : ContadorPUEntityManager.createQuery("SELECT e FROM Empresas e");
-        empresasList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : empresasQuery.getResultList();
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, empresasList, tablaEmpresas);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idempresa}"));
-        columnBinding.setColumnName("Idemp");
+        grupoTipoVtas = new javax.swing.ButtonGroup();
+        clientesQuery = java.beans.Beans.isDesignTime() ? null : ContadorPUEntityManager.createQuery("SELECT c FROM Clientes c");
+        clientesList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clientesQuery.getResultList();
+       
+        tablaContribuyentes = new javax.swing.JTable();
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, clientesList, tablaContribuyentes);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idclien}"));
+        columnBinding.setColumnName("Idclien");
         columnBinding.setColumnClass(Integer.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nombre}"));
         columnBinding.setColumnName("Nombre");
         columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${giro}"));
         columnBinding.setColumnName("Giro");
         columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${ncr}"));
-        columnBinding.setColumnName("Ncr");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nrc}"));
+        columnBinding.setColumnName("Nrc");
         columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nit}"));
-        columnBinding.setColumnName("NIT");
+        columnBinding.setColumnName("Nit");
         columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${gcontrib}"));
-        columnBinding.setColumnName("G.Cont");
+        columnBinding.setColumnName("Gcontrib");
         columnBinding.setColumnClass(Boolean.class);
-        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
-        tablaEmpresas.addMouseListener(new java.awt.event.MouseAdapter() {
+        tablaContribuyentes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaEmpresasMouseClicked(evt);
+                tablaContribuyentesMouseClicked(evt);
             }
         });
-        tablaEmpresas.addKeyListener(new java.awt.event.KeyAdapter() {
+        tablaContribuyentes.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                tablaEmpresasKeyPressed(evt);
+                tablaContribuyentesKeyPressed(evt);
             }
         });
-        jScrollPane1.setViewportView(tablaEmpresas);
-        if (tablaEmpresas.getColumnModel().getColumnCount() > 0) {
-            tablaEmpresas.getColumnModel().getColumn(0).setMinWidth(50);
-            tablaEmpresas.getColumnModel().getColumn(0).setPreferredWidth(50);
-            tablaEmpresas.getColumnModel().getColumn(0).setMaxWidth(50);
-            tablaEmpresas.getColumnModel().getColumn(3).setMinWidth(75);
-            tablaEmpresas.getColumnModel().getColumn(3).setPreferredWidth(75);
-            tablaEmpresas.getColumnModel().getColumn(3).setMaxWidth(75);
-            tablaEmpresas.getColumnModel().getColumn(5).setMinWidth(75);
-            tablaEmpresas.getColumnModel().getColumn(5).setPreferredWidth(50);
-            tablaEmpresas.getColumnModel().getColumn(5).setMaxWidth(75);
+        jScrollPane1.setViewportView(tablaContribuyentes);
+        if (tablaContribuyentes.getColumnModel().getColumnCount() > 0) {
+            tablaContribuyentes.getColumnModel().getColumn(0).setMinWidth(50);
+            tablaContribuyentes.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tablaContribuyentes.getColumnModel().getColumn(0).setMaxWidth(50);
+            tablaContribuyentes.getColumnModel().getColumn(3).setMinWidth(75);
+            tablaContribuyentes.getColumnModel().getColumn(3).setPreferredWidth(75);
+            tablaContribuyentes.getColumnModel().getColumn(3).setMaxWidth(75);
+            tablaContribuyentes.getColumnModel().getColumn(5).setMinWidth(75);
+            tablaContribuyentes.getColumnModel().getColumn(5).setPreferredWidth(50);
+            tablaContribuyentes.getColumnModel().getColumn(5).setMaxWidth(75);
         }
+
+        
+        
     }
 
     private void limpiarCampos() {

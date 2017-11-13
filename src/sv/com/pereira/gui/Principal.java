@@ -32,13 +32,13 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         Clientes = new javax.swing.JMenu();
         ClienteNuevo = new javax.swing.JMenuItem();
-        Provedores = new javax.swing.JMenu();
-        Proveedores = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         Administracion = new javax.swing.JMenu();
         AdminUsuarios = new javax.swing.JMenuItem();
         AdminTributos = new javax.swing.JMenuItem();
         Respaldos = new javax.swing.JMenuItem();
         Restauracion = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -154,7 +154,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(Empresas);
 
         Clientes.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        Clientes.setText("Clientes");
+        Clientes.setText("Contribuyentes");
         Clientes.setDelay(100);
         Clientes.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         Clientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -163,23 +163,17 @@ public class Principal extends javax.swing.JFrame {
         ClienteNuevo.setText("Clientes");
         ClienteNuevo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         ClienteNuevo.setPreferredSize(new java.awt.Dimension(100, 25));
+        ClienteNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ClienteNuevoActionPerformed(evt);
+            }
+        });
         Clientes.add(ClienteNuevo);
 
+        jMenuItem2.setText("jMenuItem2");
+        Clientes.add(jMenuItem2);
+
         jMenuBar1.add(Clientes);
-
-        Provedores.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        Provedores.setText("Proveedores");
-        Provedores.setDelay(100);
-        Provedores.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        Provedores.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Provedores.setPreferredSize(new java.awt.Dimension(100, 20));
-
-        Proveedores.setText("Proveedores");
-        Proveedores.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        Proveedores.setPreferredSize(new java.awt.Dimension(100, 25));
-        Provedores.add(Proveedores);
-
-        jMenuBar1.add(Provedores);
 
         Administracion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         Administracion.setText("Administracion");
@@ -191,6 +185,11 @@ public class Principal extends javax.swing.JFrame {
         AdminUsuarios.setText("Usuarios");
         AdminUsuarios.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         AdminUsuarios.setPreferredSize(new java.awt.Dimension(100, 25));
+        AdminUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AdminUsuariosActionPerformed(evt);
+            }
+        });
         Administracion.add(AdminUsuarios);
 
         AdminTributos.setText("Tributos");
@@ -207,6 +206,9 @@ public class Principal extends javax.swing.JFrame {
         Restauracion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         Restauracion.setPreferredSize(new java.awt.Dimension(100, 25));
         Administracion.add(Restauracion);
+
+        jMenuItem3.setText("jMenuItem3");
+        Administracion.add(jMenuItem3);
 
         jMenuBar1.add(Administracion);
 
@@ -274,6 +276,30 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_EmpresasNuevaActionPerformed
 
+    private void ClienteNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClienteNuevoActionPerformed
+        // TODO add your handling code here:
+         Contribuyentes contribuyentes = new Contribuyentes();
+        jDesktopPane1.add(contribuyentes);
+        jDesktopPane1.getDesktopManager().maximizeFrame(contribuyentes);
+        contribuyentes.setVisible(true);
+        contribuyentes.setIconifiable(true);
+        contribuyentes.setMaximizable(true);
+        contribuyentes.setClosable(true);
+        contribuyentes.setResizable(true);
+    }//GEN-LAST:event_ClienteNuevoActionPerformed
+
+    private void AdminUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdminUsuariosActionPerformed
+        // TODO add your handling code here:
+        UsuariosCrud usuariosCrud = new UsuariosCrud();
+        jDesktopPane1.add(usuariosCrud);
+        jDesktopPane1.getDesktopManager().maximizeFrame(usuariosCrud);
+        usuariosCrud.setVisible(true);
+        usuariosCrud.setIconifiable(true);
+        usuariosCrud.setMaximizable(true);
+        usuariosCrud.setClosable(true);
+        usuariosCrud.setResizable(true);
+    }//GEN-LAST:event_AdminUsuariosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -320,8 +346,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem DatosVentas;
     private javax.swing.JMenu Empresas;
     private javax.swing.JMenuItem EmpresasNueva;
-    private javax.swing.JMenu Provedores;
-    private javax.swing.JMenuItem Proveedores;
     private javax.swing.JMenuItem Respaldos;
     private javax.swing.JMenuItem Restauracion;
     private javax.swing.JMenu Sistema;
@@ -330,5 +354,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     // End of variables declaration//GEN-END:variables
 }
