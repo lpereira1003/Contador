@@ -19,6 +19,7 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem4 = new javax.swing.JMenuItem();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -39,6 +40,10 @@ public class Principal extends javax.swing.JFrame {
         Respaldos = new javax.swing.JMenuItem();
         Restauracion = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+
+        jMenuItem4.setText("jMenuItem4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -212,6 +217,20 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(Administracion);
 
+        jMenu1.setText("Historicos");
+        jMenu1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jMenu1.setPreferredSize(new java.awt.Dimension(120, 20));
+
+        jMenuItem5.setText("Rep. Historicos");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem5);
+
+        jMenuBar1.add(jMenu1);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -300,6 +319,18 @@ public class Principal extends javax.swing.JFrame {
         usuariosCrud.setResizable(true);
     }//GEN-LAST:event_AdminUsuariosActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        ReportesHist reportesHist = new ReportesHist();
+        jDesktopPane1.add(reportesHist);
+        jDesktopPane1.getDesktopManager().maximizeFrame(reportesHist);
+        reportesHist.setVisible(true);
+        reportesHist.setIconifiable(true);
+        reportesHist.setMaximizable(true);
+        reportesHist.setClosable(true);
+        reportesHist.setResizable(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -352,9 +383,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem SistemaSalir;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     // End of variables declaration//GEN-END:variables
 }
