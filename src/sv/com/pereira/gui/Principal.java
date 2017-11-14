@@ -200,6 +200,11 @@ public class Principal extends javax.swing.JFrame {
         AdminTributos.setText("Tributos");
         AdminTributos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         AdminTributos.setPreferredSize(new java.awt.Dimension(100, 25));
+        AdminTributos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AdminTributosActionPerformed(evt);
+            }
+        });
         Administracion.add(AdminTributos);
 
         Respaldos.setText("Respaldos");
@@ -323,13 +328,26 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         ReportesHist reportesHist = new ReportesHist();
         jDesktopPane1.add(reportesHist);
-        jDesktopPane1.getDesktopManager().maximizeFrame(reportesHist);
+        //jDesktopPane1.getDesktopManager().maximizeFrame(reportesHist);
         reportesHist.setVisible(true);
         reportesHist.setIconifiable(true);
         reportesHist.setMaximizable(true);
         reportesHist.setClosable(true);
         reportesHist.setResizable(true);
+        
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void AdminTributosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdminTributosActionPerformed
+        // TODO add your handling code here:
+        Tributos tributos = new Tributos();
+        jDesktopPane1.add(tributos);
+       // jDesktopPane1.getDesktopManager().maximizeFrame(tributos);
+        tributos.setVisible(true);
+        tributos.setIconifiable(true);
+        tributos.setMaximizable(true);
+        tributos.setClosable(true);
+       // tributos.setResizable(true);
+    }//GEN-LAST:event_AdminTributosActionPerformed
 
     /**
      * @param args the command line arguments

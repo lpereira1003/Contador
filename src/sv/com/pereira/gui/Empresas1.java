@@ -1,6 +1,7 @@
 package sv.com.pereira.gui;
 
 
+import com.placeholder.PlaceHolder;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.VK_ENTER;
@@ -19,6 +20,11 @@ import pojos.Empresas;
 public class Empresas1 extends javax.swing.JInternalFrame {
     public Empresas1() {
         initComponents();
+        PlaceHolder holder = new PlaceHolder(campoSeleccionEmpresa, "Nombre de Empresa o NRC");
+        PlaceHolder holder1 = new PlaceHolder(campoNombre, "Nombre de Empresa");
+        PlaceHolder holder2 = new PlaceHolder(campoGiro, "Giro Comercial");
+        PlaceHolder holder3 = new PlaceHolder(campoNIT, "NIT");
+        PlaceHolder holder4 = new PlaceHolder(campoNCR, "NCR");
     }
 
     @SuppressWarnings("unchecked")

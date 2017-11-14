@@ -755,6 +755,7 @@
             <Property name="horizontalAlignment" type="int" value="4"/>
           </Properties>
           <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoDocVtaKeyPressed"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoDocVtaKeyTyped"/>
           </Events>
         </Component>

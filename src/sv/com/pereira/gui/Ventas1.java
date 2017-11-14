@@ -1,6 +1,7 @@
 package sv.com.pereira.gui;
 
 
+import com.placeholder.PlaceHolder;
 import com.toedter.calendar.JCalendar;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -49,6 +50,11 @@ import pojos.Ventas;
 public class Ventas1 extends javax.swing.JInternalFrame {
     public Ventas1() {
         initComponents();
+        PlaceHolder holder = new PlaceHolder(campoSeleccionEmpresa, "Nombre de Empresa o NRC");
+        PlaceHolder holder1 = new PlaceHolder(campoSeleccionCliente, "Nombre de Cliente o NRC");
+        PlaceHolder holder2 = new PlaceHolder(campoBuscoTransaccion, "# de Documento");
+        PlaceHolder holder3 = new PlaceHolder(campoDocVta, "# Documento de Venta");
+        PlaceHolder holder4 = new PlaceHolder(campoGravado, "Valor Monetario");
         grupoTipoVtas.add(chkCCF);
         grupoTipoVtas.add(chkFCF);
         grupoTipoVtas.add(chkTKT);
@@ -388,6 +394,9 @@ public class Ventas1 extends javax.swing.JInternalFrame {
 
         campoDocVta.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         campoDocVta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoDocVtaKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campoDocVtaKeyTyped(evt);
             }
@@ -779,7 +788,7 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             public void keyReleased(final KeyEvent e)
             {
                 if(campoGravado.getText().isEmpty()){
-                    limpiarcamposTransacciones();
+                    //limpiarcamposTransacciones();
                     campoGravado.setText("");
                     return;
                 }
@@ -1201,6 +1210,12 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
+    private void campoDocVtaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDocVtaKeyPressed
+        if(evt.getKeyCode()==VK_ENTER) {
+            campoGravado.requestFocus();
+        }  // TODO add your handling code here:
+    }//GEN-LAST:event_campoDocVtaKeyPressed
+
     TableRowSorter trs;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CampoIva;
@@ -1267,7 +1282,8 @@ public class Ventas1 extends javax.swing.JInternalFrame {
     campoGravado.setText("");
     campoTotalVta.setText("0.00");
     campoPercepcion.setText("0.00");
-    campoGravado.requestFocus();
+    //campoDocVta.setText("");
+    campoDocVta.requestFocus();
     }
 
     private void incrementaDoc() {

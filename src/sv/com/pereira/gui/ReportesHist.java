@@ -1,6 +1,7 @@
 package sv.com.pereira.gui;
 
 import com.placeholder.PlaceHolder;
+import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -43,7 +44,9 @@ public class ReportesHist extends javax.swing.JInternalFrame {
         initComponents();
       
         PlaceHolder holder = new PlaceHolder(campoSeleccionEmpresa, "Ingrese Nombre de Empresa o NRC");
-       holder.setSize(20);
+       
+       
+       
     }
     TableRowSorter trs;
     @SuppressWarnings("unchecked")
