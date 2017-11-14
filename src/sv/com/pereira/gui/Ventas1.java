@@ -1,6 +1,7 @@
 package sv.com.pereira.gui;
 
 
+import com.toedter.calendar.JCalendar;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.VK_ENTER;
@@ -858,6 +859,11 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             return;
         }
         Calendar now = Calendar.getInstance();
+        JCalendar fechaProceso=calendario;
+        
+        System.out.println("fecha del sistema.. "+now);
+        System.out.println("Fecha digitacion... "+fechaProceso);
+        //now.compareTo(fechaProceso);
         int mesActual = now.get(Calendar.MONTH)+1;
         int ventaAnticipada = mesActual+1;
         //if(ventaAnticipada==13)ventaAnticipada=01;
