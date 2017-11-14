@@ -43,7 +43,7 @@ public class ReportesHist extends javax.swing.JInternalFrame {
         initComponents();
       
         PlaceHolder holder = new PlaceHolder(campoSeleccionEmpresa, "Ingrese Nombre de Empresa o NRC");
-                //holder.setsetCursiva(true);
+       holder.setSize(20);
     }
     TableRowSorter trs;
     @SuppressWarnings("unchecked")
