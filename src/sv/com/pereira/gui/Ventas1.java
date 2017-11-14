@@ -859,18 +859,30 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             return;
         }
         Calendar now = Calendar.getInstance();
-        JCalendar fechaProceso=calendario;
+        Date fechaSistema = new Date();
+        Date fechaProceso=calendario.getDate();
         
-        System.out.println("fecha del sistema.. "+now);
+        System.out.println("fecha del sistema.. "+fechaSistema);
         System.out.println("Fecha digitacion... "+fechaProceso);
-        //now.compareTo(fechaProceso);
+        int comparoFechas = fechaSistema.compareTo(fechaProceso);
+        System.out.println("Resultado de compracion es "+comparoFechas);
+        if(comparoFechas<0){
+           JOptionPane.showMessageDialog(this,"La Fecha de Venta MAYOR a Fecha del PC\n"
+                                             + "No Puedo procesar este dato \n"                                             
+                                             + "Verifique que fecha del PC sea Correcta..");
+           return;
+        }
+        
+        
         int mesActual = now.get(Calendar.MONTH)+1;
         int ventaAnticipada = mesActual+1;
+        
         //if(ventaAnticipada==13)ventaAnticipada=01;
         int anno = now.get(Calendar.YEAR);
         int mesdigita = calendario.getDate().getMonth()+1;
         System.out.println("mes en la pc.... "+mesActual);
         System.out.println("mes digitacion.. "+mesdigita);
+        
         if(mesActual==mesdigita){
             JOptionPane.showMessageDialog(this,"Ha ingresado una venta anticipada..... \n"
                                              + "Verifiquelo en Reporte Histórico...... \n"                                             

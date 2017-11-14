@@ -96,7 +96,7 @@
                   </Group>
                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="36" max="32767" attributes="0"/>
+              <EmptySpace pref="37" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -124,6 +124,7 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="tablaEmpresas">
           <Properties>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
@@ -153,10 +154,14 @@
                 </Column>
               </TableColumnModel>
             </Property>
+            <Property name="name" type="java.lang.String" value="" noResource="true"/>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
+          </AccessibilityProperties>
           <BindingProperties>
             <BindingProperty name="elements" source="empresasList" target="tablaEmpresas" targetPath="elements" updateStrategy="0" immediately="true">
               <Subbinding sourcePath="${idempresa}">
@@ -274,11 +279,6 @@
           </Properties>
         </Component>
         <Component class="com.toedter.calendar.JYearChooser" name="annoSelect">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="1"/>
-            </Property>
-          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnVerReporte">
           <Properties>
@@ -337,6 +337,11 @@
       </SubComponents>
     </Container>
     <Component class="javax.swing.JTextField" name="campoSeleccionEmpresa">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Arial" size="14" style="1"/>
+        </Property>
+      </Properties>
       <Events>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoSeleccionEmpresaKeyTyped"/>
       </Events>

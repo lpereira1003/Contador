@@ -1,5 +1,6 @@
 package sv.com.pereira.gui;
 
+import com.placeholder.PlaceHolder;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -28,6 +29,7 @@ import static net.sf.jasperreports.engine.util.JRLoader.loadObjectFromFile;
 import net.sf.jasperreports.view.JasperViewer;
 
 
+
 /**
  *
  * @author Master-Pc
@@ -39,6 +41,9 @@ public class ReportesHist extends javax.swing.JInternalFrame {
      */
     public ReportesHist() {
         initComponents();
+      
+        PlaceHolder holder = new PlaceHolder(campoSeleccionEmpresa, "Ingrese Nombre de Empresa o NRC");
+                //holder.setsetCursiva(true);
     }
     TableRowSorter trs;
     @SuppressWarnings("unchecked")
@@ -80,6 +85,9 @@ public class ReportesHist extends javax.swing.JInternalFrame {
         jLabel1.setText("Resportes Históricos de transacciones");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        tablaEmpresas.setToolTipText("");
+        tablaEmpresas.setName(""); // NOI18N
+
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, empresasList, tablaEmpresas);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idempresa}"));
         columnBinding.setColumnName("Idempresa");
@@ -99,6 +107,7 @@ public class ReportesHist extends javax.swing.JInternalFrame {
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         jScrollPane1.setViewportView(tablaEmpresas);
+        tablaEmpresas.getAccessibleContext().setAccessibleName("");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Configuracion de Busqueda"));
 
@@ -109,8 +118,6 @@ public class ReportesHist extends javax.swing.JInternalFrame {
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel3.setText("Año");
-
-        annoSelect.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
 
         btnVerReporte.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnVerReporte.setText("Ver reporte");
@@ -200,6 +207,7 @@ public class ReportesHist extends javax.swing.JInternalFrame {
                 .addGap(20, 20, 20))
         );
 
+        campoSeleccionEmpresa.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         campoSeleccionEmpresa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campoSeleccionEmpresaKeyTyped(evt);
@@ -236,7 +244,7 @@ public class ReportesHist extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(campoSeleccionEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
