@@ -334,6 +334,7 @@ public class Principal extends javax.swing.JFrame {
         reportesHist.setMaximizable(true);
         reportesHist.setClosable(true);
         reportesHist.setResizable(true);
+        reportesHist.toFront();
         
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 

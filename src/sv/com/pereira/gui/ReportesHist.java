@@ -95,18 +95,23 @@ public class ReportesHist extends javax.swing.JInternalFrame {
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idempresa}"));
         columnBinding.setColumnName("Idempresa");
         columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nombre}"));
         columnBinding.setColumnName("Nombre");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${ncr}"));
         columnBinding.setColumnName("Ncr");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${giro}"));
         columnBinding.setColumnName("Giro");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${gcontrib}"));
         columnBinding.setColumnName("Gcontrib");
         columnBinding.setColumnClass(Boolean.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         jScrollPane1.setViewportView(tablaEmpresas);
@@ -418,7 +423,7 @@ public class ReportesHist extends javax.swing.JInternalFrame {
             JasperPrint jasperPrint = fillReport(reporte, valores, conn);
             JasperViewer viewer = new JasperViewer(jasperPrint, false);
             viewer.toFront();
-            viewer.setTitle("Reporte Compras");
+            viewer.setTitle("Reporte Consumidor Final");
             viewer.setSize(1100, 600);
             viewer.setVisible(true);
         } catch (JRException ex) {
@@ -457,7 +462,7 @@ public class ReportesHist extends javax.swing.JInternalFrame {
             JasperPrint jasperPrint = fillReport(reporte, valores, conn);
             JasperViewer viewer = new JasperViewer(jasperPrint, false);
             viewer.toFront();
-            viewer.setTitle("Reporte Compras");
+            viewer.setTitle("Reporte Ventas a Contribuyentes");
             viewer.setSize(1100, 600);
             viewer.setVisible(true);
         } catch (JRException ex) {
