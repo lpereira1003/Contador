@@ -5,7 +5,31 @@
  */
 package sv.com.pereira.gui;
 
+import java.awt.Desktop;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import static java.lang.System.exit;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import static java.util.Calendar.DAY_OF_MONTH;
+import static java.util.Calendar.HOUR_OF_DAY;
+import static java.util.Calendar.MINUTE;
+import static java.util.Calendar.MONTH;
+import static java.util.Calendar.SECOND;
+import static java.util.Calendar.YEAR;
+import static java.util.Calendar.getInstance;
+import java.util.List;
+import javax.swing.JFileChooser;
+import static javax.swing.JFileChooser.APPROVE_OPTION;
+import static javax.swing.JFileChooser.DIRECTORIES_ONLY;
+import static javax.swing.JFileChooser.FILES_ONLY;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import static javax.swing.JOptionPane.showMessageDialog;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Principal extends javax.swing.JFrame {
 
@@ -22,6 +46,11 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         Sistema = new javax.swing.JMenu();
         SistemaSalir = new javax.swing.JMenuItem();
@@ -42,6 +71,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
+        comprasGlob = new javax.swing.JMenuItem();
 
         jMenuItem4.setText("jMenuItem4");
 
@@ -51,26 +81,97 @@ public class Principal extends javax.swing.JFrame {
         jDesktopPane1.setName(""); // NOI18N
         jDesktopPane1.setPreferredSize(new java.awt.Dimension(1024, 789));
 
-        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel1.setText("Contador 2017");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Software Libros de IVA");
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logoPCS.png"))); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Diseño y Codificación: Pereira Computer Services 2017");
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Localizanos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logoGoogleMaps.jpg"))); // NOI18N
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logoFB.png"))); // NOI18N
+        jLabel5.setToolTipText("");
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel4)
+                .addGap(20, 20, 20))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
 
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addGap(254, 254, 254)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(514, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(4, 4, 4))
+                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 978, Short.MAX_VALUE)))))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap(666, Short.MAX_VALUE)
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
                 .addComponent(jLabel1)
-                .addGap(48, 48, 48))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         Sistema.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -210,11 +311,21 @@ public class Principal extends javax.swing.JFrame {
         Respaldos.setText("Respaldos");
         Respaldos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         Respaldos.setPreferredSize(new java.awt.Dimension(100, 25));
+        Respaldos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RespaldosActionPerformed(evt);
+            }
+        });
         Administracion.add(Respaldos);
 
         Restauracion.setText("Restauracion");
         Restauracion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         Restauracion.setPreferredSize(new java.awt.Dimension(100, 25));
+        Restauracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RestauracionActionPerformed(evt);
+            }
+        });
         Administracion.add(Restauracion);
 
         jMenuItem3.setText("jMenuItem3");
@@ -226,13 +337,21 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jMenu1.setPreferredSize(new java.awt.Dimension(120, 20));
 
-        jMenuItem5.setText("Rep. Historicos");
+        jMenuItem5.setText("Mov Mensuales");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem5ActionPerformed(evt);
             }
         });
         jMenu1.add(jMenuItem5);
+
+        comprasGlob.setText("Mov. Anuales");
+        comprasGlob.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comprasGlobActionPerformed(evt);
+            }
+        });
+        jMenu1.add(comprasGlob);
 
         jMenuBar1.add(jMenu1);
 
@@ -267,10 +386,7 @@ public class Principal extends javax.swing.JFrame {
         ventas.setMaximizable(true);
         ventas.setClosable(true);
         ventas.setResizable(true);
-        
-      
-
-
+        ventas.toFront();
     }//GEN-LAST:event_DatosVentasActionPerformed
 
     private void DatosComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DatosComprasActionPerformed
@@ -283,20 +399,20 @@ public class Principal extends javax.swing.JFrame {
         compras1.setMaximizable(true);
         compras1.setClosable(true);
         compras1.setResizable(true);
-        
-         
+        compras1.toFront();
     }//GEN-LAST:event_DatosComprasActionPerformed
 
     private void EmpresasNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmpresasNuevaActionPerformed
         // TODO add your handling code here:
          Empresas1 empresas = new Empresas1();
         jDesktopPane1.add(empresas);
-        jDesktopPane1.getDesktopManager().maximizeFrame(empresas);
+        //jDesktopPane1.getDesktopManager().maximizeFrame(empresas);
         empresas.setVisible(true);
         empresas.setIconifiable(true);
         empresas.setMaximizable(true);
         empresas.setClosable(true);
         empresas.setResizable(true);
+        empresas.toFront();
         
     }//GEN-LAST:event_EmpresasNuevaActionPerformed
 
@@ -304,24 +420,26 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
          Contribuyentes contribuyentes = new Contribuyentes();
         jDesktopPane1.add(contribuyentes);
-        jDesktopPane1.getDesktopManager().maximizeFrame(contribuyentes);
+       // jDesktopPane1.getDesktopManager().maximizeFrame(contribuyentes);
         contribuyentes.setVisible(true);
         contribuyentes.setIconifiable(true);
         contribuyentes.setMaximizable(true);
         contribuyentes.setClosable(true);
         contribuyentes.setResizable(true);
+        contribuyentes.toFront();
     }//GEN-LAST:event_ClienteNuevoActionPerformed
 
     private void AdminUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdminUsuariosActionPerformed
         // TODO add your handling code here:
         UsuariosCrud usuariosCrud = new UsuariosCrud();
         jDesktopPane1.add(usuariosCrud);
-        jDesktopPane1.getDesktopManager().maximizeFrame(usuariosCrud);
+       // jDesktopPane1.getDesktopManager().maximizeFrame(usuariosCrud);
         usuariosCrud.setVisible(true);
         usuariosCrud.setIconifiable(true);
         usuariosCrud.setMaximizable(true);
         usuariosCrud.setClosable(true);
         usuariosCrud.setResizable(true);
+        usuariosCrud.toFront();
     }//GEN-LAST:event_AdminUsuariosActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -347,8 +465,142 @@ public class Principal extends javax.swing.JFrame {
         tributos.setIconifiable(true);
         tributos.setMaximizable(true);
         tributos.setClosable(true);
+        tributos.toFront();
        // tributos.setResizable(true);
     }//GEN-LAST:event_AdminTributosActionPerformed
+
+    private void RespaldosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RespaldosActionPerformed
+        // TODO add your handling code here:
+         JFileChooser chooser = new JFileChooser();
+        //chooser.setCurrentDirectory ( new java.io.File ( "." ) );
+        chooser.setDialogTitle("Selección de dirección");
+        chooser.setFileSelectionMode(DIRECTORIES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+        if (chooser.showOpenDialog(null) == APPROVE_OPTION) {
+            List<String> comandos = new ArrayList<>();
+            Calendar cal = getInstance();
+            String file = "backup" + cal.get(DAY_OF_MONTH) + cal.get(MONTH + 1) + cal.get(YEAR)
+                    + cal.get(HOUR_OF_DAY) + cal.get(MINUTE) + cal.get(SECOND) + ".sql";
+            comandos.add("C:\\Program Files\\PostgreSQL\\9.5\\bin\\pg_dump.exe");
+            //comandos.add("-i");
+            comandos.add("-h");
+            comandos.add("192.168.1.10");
+            //comandos.add("192.168.0.25");
+            comandos.add("-p");
+            comandos.add("5432");
+            comandos.add("-U");
+            comandos.add("postgres");
+            comandos.add("-F");
+            comandos.add("c");
+            comandos.add("-b");
+            comandos.add("-v");
+            comandos.add("-f");
+            comandos.add(chooser.getSelectedFile().toString() + "\\" + file);
+            comandos.add("contabledb");
+            ProcessBuilder pb = new ProcessBuilder(comandos);
+            pb.environment().put("PGPASSWORD", "root");
+            try {
+                final Process process = pb.start();
+                try (BufferedReader r = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
+                    String line = r.readLine();
+                    while (line != null) {
+                        line = r.readLine();
+                    }
+                }
+                process.waitFor();
+                process.destroy();
+                showMessageDialog(null, "Respaldo exitoso!");
+            } catch (IOException | InterruptedException e) {
+            }
+        }
+    }//GEN-LAST:event_RespaldosActionPerformed
+
+    private void RestauracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RestauracionActionPerformed
+        // TODO add your handling code here:
+        JFileChooser chooser = new javax.swing.JFileChooser();
+        chooser.setFileSelectionMode(FILES_ONLY);
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("SQL", "sql");
+        chooser.setFileFilter(filtro);
+        int res = chooser.showOpenDialog(this);
+        if (res == APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            //aqui el restore:
+            List<String> comandos = new ArrayList<>();
+            comandos.add("C:\\Program Files\\PostgreSQL\\9.5\\bin\\pg_restore.exe");
+            comandos.add("-h");
+            comandos.add("192.168.1.10");
+            comandos.add("-p");
+            comandos.add("5432");
+            comandos.add("-U");
+            comandos.add("postgres");
+            comandos.add("-c");
+            comandos.add("-d");
+            comandos.add("freyadb");
+            comandos.add("-v");
+            comandos.add(file.getAbsolutePath());
+            ProcessBuilder pb = new ProcessBuilder(comandos);
+            pb.environment().put("PGPASSWORD", "root");
+            try {
+                final Process process = pb.start();
+                try (BufferedReader r = new BufferedReader(
+                        new InputStreamReader(process.getErrorStream()))) {
+                    String line = r.readLine();
+                    while (line != null) {
+                        line = r.readLine();
+                    }
+                }
+                process.waitFor();
+                process.destroy();
+                showMessageDialog(null, "Restauración exitosa");
+            } catch (IOException | InterruptedException e) {
+                showMessageDialog(null, "No se pudo encontrar el archivo","Error", ERROR_MESSAGE);
+     
+            }
+        }
+    }//GEN-LAST:event_RestauracionActionPerformed
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        // TODO add your handling code here:
+       try {
+        if (Desktop.isDesktopSupported()) {
+            Desktop desktop = Desktop.getDesktop();
+        if (desktop.isSupported(Desktop.Action.BROWSE)) {
+            desktop.browse(new URI("https://www.facebook.com/pereiracomputerservices/"));
+        }
+        }
+        } catch (IOException | URISyntaxException e) {
+           showMessageDialog(null,"Error del Navegador");
+        }
+     
+    }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // TODO add your handling code here:
+        try {
+        if (Desktop.isDesktopSupported()) {
+            Desktop desktop = Desktop.getDesktop();
+        if (desktop.isSupported(Desktop.Action.BROWSE)) {
+            desktop.browse(new URI("https://www.google.com.sv/maps/place/Pereira+Computer+Services/@13.8040259,-88.1568606,16z/data=!4m12!1m6!3m5!1s0x0:0xa01accddfc546cef!2sPereira+Computer+Services!8m2!3d13.802213!4d-88.152451!3m4!1s0x0:0xa01accddfc546cef!8m2!3d13.802213!4d-88.152451"));
+        }
+        }
+        } catch (IOException | URISyntaxException e) {
+           showMessageDialog(null,"Error del Navegador");
+        }
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void comprasGlobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comprasGlobActionPerformed
+        // TODO add your handling code here:
+           HistoricoCompras historicoCompras = new HistoricoCompras();
+        jDesktopPane1.add(historicoCompras);
+        //jDesktopPane1.getDesktopManager().maximizeFrame(empresas);
+        historicoCompras.setVisible(true);
+        historicoCompras.setIconifiable(true);
+        historicoCompras.setMaximizable(true);
+        historicoCompras.setClosable(true);
+        historicoCompras.setResizable(true);
+        historicoCompras.toFront();
+        
+    }//GEN-LAST:event_comprasGlobActionPerformed
 
     /**
      * @param args the command line arguments
@@ -400,8 +652,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem Restauracion;
     private javax.swing.JMenu Sistema;
     private javax.swing.JMenuItem SistemaSalir;
+    private javax.swing.JMenuItem comprasGlob;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -409,5 +666,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

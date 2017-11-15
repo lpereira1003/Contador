@@ -3,6 +3,7 @@ package sv.com.pereira.gui;
 import com.placeholder.PlaceHolder;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import static java.awt.event.KeyEvent.VK_ENTER;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -25,8 +26,8 @@ public class UsuariosCrud extends javax.swing.JInternalFrame {
         initComponents();
         PlaceHolder holder = new PlaceHolder(CampoNombreEmpleado, "Nombre de Usuario");
         PlaceHolder holder1 = new PlaceHolder(CampoUser, "Usuario Asignado");
-        PlaceHolder holder2 = new PlaceHolder(campoPass1, "Contraseña");
-        PlaceHolder holder3 = new PlaceHolder(campoPass2, "Reingrese Contrasena");
+//        PlaceHolder holder2 = new PlaceHolder(campoPass1, "Contraseña");
+//        PlaceHolder holder3 = new PlaceHolder(campoPass2, "Reingrese Contrasena");
         //PlaceHolder holder4 = new PlaceHolder(campoGravado, "Valor Monetario");
         tablaEmpleados.setAutoCreateRowSorter(true);//permite ordenar la tabla x cuaquier columna
      }
@@ -100,11 +101,21 @@ public class UsuariosCrud extends javax.swing.JInternalFrame {
                 CampoUserActionPerformed(evt);
             }
         });
+        CampoUser.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                CampoUserKeyPressed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel4.setText("Usuario");
 
         CampoNombreEmpleado.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        CampoNombreEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                CampoNombreEmpleadoKeyPressed(evt);
+            }
+        });
 
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(102, 255, 102), null, null));
 
@@ -126,15 +137,17 @@ public class UsuariosCrud extends javax.swing.JInternalFrame {
         RadioButtonEliminar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         RadioButtonEliminar.setText("Eliminar");
 
-        btnProcesar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        btnProcesar.setText("Procesar");
+        btnProcesar.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        btnProcesar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar.png"))); // NOI18N
+        btnProcesar.setText("Guardar");
         btnProcesar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProcesarActionPerformed(evt);
             }
         });
 
-        btnSalir.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnSalir.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/home.png"))); // NOI18N
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,11 +168,10 @@ public class UsuariosCrud extends javax.swing.JInternalFrame {
                 .addGap(126, 126, 126))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnProcesar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnProcesar)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,10 +183,10 @@ public class UsuariosCrud extends javax.swing.JInternalFrame {
                 .addGap(30, 30, 30)
                 .addComponent(RadioButtonEliminar)
                 .addGap(18, 18, 18)
-                .addComponent(btnProcesar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnProcesar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addComponent(btnSalir)
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -182,6 +194,18 @@ public class UsuariosCrud extends javax.swing.JInternalFrame {
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel6.setText("Reingrese Contraseña");
+
+        campoPass1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoPass1KeyPressed(evt);
+            }
+        });
+
+        campoPass2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoPass2KeyPressed(evt);
+            }
+        });
 
         tablaEmpleados.getTableHeader().setReorderingAllowed(false);
 
@@ -246,8 +270,8 @@ public class UsuariosCrud extends javax.swing.JInternalFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
@@ -256,19 +280,20 @@ public class UsuariosCrud extends javax.swing.JInternalFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(CampoUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
-                        .addGap(22, 22, 22)
+                        .addGap(20, 20, 20)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(campoPass1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(23, 23, 23)
+                        .addGap(20, 20, 20)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(campoPass2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(campoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                        .addGap(20, 20, 20)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(campoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -276,22 +301,18 @@ public class UsuariosCrud extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))))
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(1, 1, 1)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
+                .addGap(20, 20, 20)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -313,7 +334,6 @@ public class UsuariosCrud extends javax.swing.JInternalFrame {
     private void btnProcesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcesarActionPerformed
         EntityManagerFactory emf = createEntityManagerFactory("ContadorPU");
         EntityManager em = emf.createEntityManager();
-        
         if(RadioButtonEliminar.isSelected()){
            int fila = tablaEmpleados.getSelectedRow();
             String idEmpleado = tablaEmpleados.getValueAt(fila, 0).toString();
@@ -321,7 +341,6 @@ public class UsuariosCrud extends javax.swing.JInternalFrame {
 //           Usuarios usuario = em.find(Usuarios.class,idEmpleadoInt);
            EntityTransaction tx = em.getTransaction();
             tx.begin();
-      
             try {
                Usuarios usuario = em.find(Usuarios.class, idEmpleadoInt);
                em.remove(usuario);
@@ -332,128 +351,111 @@ public class UsuariosCrud extends javax.swing.JInternalFrame {
                tx.rollback();
                return;
             } 
-
            limpiarCampos();
-           
         } 
-        if(RadioButtonAgregar.isSelected()){            
-            /*validadar entradas en camposTXT*/
-//            int filabaja = tablaEmpleados.getSelectedRow();
-//            String estadoUsuario = tablaEmpleados.getValueAt(filabaja, 3).toString();
-        
-        if(CampoUser.getText().length()==0) {
+        if(RadioButtonAgregar.isSelected()){
+            if(CampoUser.getText().length()==0) {
             showMessageDialog(this,"Nombre NO puede ser Vacio");
             CampoUser.requestFocus();
             return;
-        }
-        else{
-            if(CampoNombreEmpleado.getText().length()==0)
-            {
-                showMessageDialog(this, "Seleccione Empleado de la tabla");
-                CampoUser.requestFocus();
-                return;   
             }
-          
-        
-                           
-            if(campoPass1.getText().length()==0||campoPass2.getText().length()==0)
-            {
+            else{
+                if(CampoNombreEmpleado.getText().length()==0)
+                {
+                    showMessageDialog(this, "Seleccione Empleado de la tabla");
+                    CampoUser.requestFocus();
+                    return;   
+                }          
+                if(campoPass1.getText().length()==0||campoPass2.getText().length()==0)
+                {
                     showMessageDialog(this, "No Moleste please\n NO acepto Contraseñas en Blanco");
-                campoPass1.requestFocus();
-                return;
-            }         
-            if(campoPass1.getText().equals(campoPass2.getText())){
-            }else
-            {
+                    campoPass1.requestFocus();
+                    return;
+                }         
+                if(campoPass1.getText().equals(campoPass2.getText())){
+                }else
+                {
                     showMessageDialog(this, "Las Contraseñas NO coinciden\n Intente Nuevmente");
-                campoPass1.setText("");
-                campoPass2.setText("");
-                campoPass1.requestFocus();
-                return; 
-            }
-             Usuarios usuario = new Usuarios();
-             //preparando data
-           // Empleado empleado = em.find(Empleado.class,idEmpleadoInt);
-            
-            String usuarioEncrip=CampoUser.getText(); 
-            String usuarioEncriptado=md5Hex(usuarioEncrip); 
-            String paswordEncrip=campoPass1.getText(); 
-            String passwordEncriptado=md5Hex(paswordEncrip);
-            usuario.setNombre(CampoNombreEmpleado.getText());
-            usuario.setPassw(passwordEncriptado);
-            usuario.setUsuario(usuarioEncriptado);
-            //preparando enlace
-            em.persist(usuario);
-            try {
-                // escribiendo on DB
-                em.getTransaction().begin();
+                    campoPass1.setText("");
+                    campoPass2.setText("");
+                    campoPass1.requestFocus();
+                    return; 
+                }
+                Usuarios usuario = new Usuarios();
+                String usuarioEncrip=CampoUser.getText(); 
+                String usuarioEncriptado=md5Hex(usuarioEncrip); 
+                String paswordEncrip=campoPass1.getText(); 
+                String passwordEncriptado=md5Hex(paswordEncrip);
+                usuario.setNombre(CampoNombreEmpleado.getText());
+                usuario.setPassw(passwordEncriptado);
+                usuario.setUsuario(usuarioEncriptado);
+                //preparando enlace
                 em.persist(usuario);
-                em.getTransaction().commit();
-            }
-            catch (Exception e) {
-            }finally {
-            // actualizarTabla();
-                em.close();
-            }
-                showMessageDialog(this, "El Usuario se guardó correctamente");
+                try {
+                    // escribiendo on DB
+                    em.getTransaction().begin();
+                    em.persist(usuario);
+                    em.getTransaction().commit();
+                }
+                catch (Exception e) {
+                }finally {
+                // actualizarTabla();
+                    em.close();
+                }
+                    showMessageDialog(this, "El Usuario se guardó correctamente");
+                 limpiarCampos();
+                 actualizarTabla();
+                }
+        }// fin de Agregar
+        if(RadioButtonModificar.isSelected())
+            {//*** modificando usuarios
+            if(CampoUser.getText().length()==0) 
+                {
+                     showMessageDialog(this,"Nombre NO puede ser Vacio");
+                     CampoUser.requestFocus();
+                     return;
+                }
+             if(campoPass1.getText().length()==0||campoPass2.getText().length()==0)
+             {
+                 showMessageDialog(this, "No Moleste please\n NO acepto Contraseñas en Blanco");
+                 campoPass1.requestFocus();
+                 return;
+             }         
+             if(campoPass1.getText().equals(campoPass2.getText())){
+             }else
+                {
+                    showMessageDialog(this, "Las Contraseñas NO coinciden\n Intente Nuevamente");
+                    campoPass1.setText("");
+                    campoPass2.setText("");
+                    campoPass1.requestFocus();
+                    return; 
+                } 
+             int fila = tablaEmpleados.getSelectedRow();
+             String idEmpleado1 = tablaEmpleados.getValueAt(fila, 0).toString();
+             int idEmpleadoInt = parseInt(idEmpleado1);;
+             Integer iduserfindInt = null;
+             Usuarios usuario = em.find(Usuarios.class,idEmpleadoInt);
+             usuario.setNombre(CampoNombreEmpleado.getText());
+             String usuarioEncrip=CampoUser.getText(); 
+             String usuarioEncriptado=md5Hex(usuarioEncrip); 
+             String paswordEncrip=campoPass1.getText(); 
+             String passwordEncriptado=md5Hex(paswordEncrip);
+             usuario.setNombre(CampoNombreEmpleado.getText());
+             usuario.setPassw(passwordEncriptado);
+             usuario.setUsuario(usuarioEncriptado);
+             EntityTransaction tx = em.getTransaction();
+             tx.begin();
+             try {
+                em.persist(usuario);
+                tx.commit();
+             } catch (Exception e) {
+                e.printStackTrace();
+                tx.rollback();
+             }
+             showMessageDialog(this, "Guardado correctamente");
              limpiarCampos();
-             actualizarTabla();
-            }
-        }
-        if(RadioButtonModificar.isSelected())  {//*** modificando usuarios
-           if(CampoUser.getText().length()==0) 
-           {
-                showMessageDialog(this,"Nombre NO puede ser Vacio");
-                CampoUser.requestFocus();
-                return;
-           }
-            
-                           
-            if(campoPass1.getText().length()==0||campoPass2.getText().length()==0)
-            {
-                showMessageDialog(this, "No Moleste please\n NO acepto Contraseñas en Blanco");
-                campoPass1.requestFocus();
-                return;
-            }         
-            if(campoPass1.getText().equals(campoPass2.getText())){
-            }else
-            {
-                showMessageDialog(this, "Las Contraseñas NO coinciden\n Intente Nuevamente");
-                campoPass1.setText("");
-                campoPass2.setText("");
-                campoPass1.requestFocus();
-                return; 
-            } 
-            int fila = tablaEmpleados.getSelectedRow();
-            String idEmpleado1 = tablaEmpleados.getValueAt(fila, 0).toString();
-            int idEmpleadoInt = parseInt(idEmpleado1);;
-            Integer iduserfindInt = null;
-            Usuarios usuario = em.find(Usuarios.class,idEmpleadoInt);
-            usuario.setNombre(CampoNombreEmpleado.getText());
-            String usuarioEncrip=CampoUser.getText(); 
-            String usuarioEncriptado=md5Hex(usuarioEncrip); 
-            String paswordEncrip=campoPass1.getText(); 
-            String passwordEncriptado=md5Hex(paswordEncrip);
-            usuario.setNombre(CampoNombreEmpleado.getText());
-            usuario.setPassw(passwordEncriptado);
-            usuario.setUsuario(usuarioEncriptado);
-            EntityTransaction tx = em.getTransaction();
-            tx.begin();
-
-            try {
-               //Employee anEmployee = manager.find(Employee.class, id);
-               
-               em.persist(usuario);
-               tx.commit();
-            } catch (Exception e) {
-               e.printStackTrace();
-               tx.rollback();
-            }
-
-            showMessageDialog(this, "Guardado correctamente");
-            limpiarCampos();
-           actualizarTabla();
-        }
+            actualizarTabla();
+        }//fin de Modificar
     }//GEN-LAST:event_btnProcesarActionPerformed
 
     private void CampoUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoUserActionPerformed
@@ -491,19 +493,38 @@ TableRowSorter trs;
 
     private void tablaEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaEmpleadosMouseClicked
         // TODO add your handling code here:
-          EntityManagerFactory emf = createEntityManagerFactory("ContadorPU");
+        EntityManagerFactory emf = createEntityManagerFactory("ContadorPU");
         EntityManager em = emf.createEntityManager();
         int fila = tablaEmpleados.getSelectedRow();
         String id = tablaEmpleados.getValueAt(fila, 0).toString();
         int id1 = Integer.parseInt(id);
         Usuarios usuario = em.find(Usuarios.class,id1);
         CampoNombreEmpleado.setText(usuario.getNombre());
-       // CampoUser.setText(usuario.getUsuario());
-        campoPass1.setText(usuario.getPassw());
-        campoPass2.setText(usuario.getPassw());
-        
-        
     }//GEN-LAST:event_tablaEmpleadosMouseClicked
+
+    private void CampoNombreEmpleadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CampoNombreEmpleadoKeyPressed
+         if(evt.getKeyCode()==VK_ENTER) {
+            CampoUser.requestFocus();
+        }  
+    }//GEN-LAST:event_CampoNombreEmpleadoKeyPressed
+
+    private void CampoUserKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CampoUserKeyPressed
+        if(evt.getKeyCode()==VK_ENTER) {
+            campoPass1.requestFocus();
+        } 
+    }//GEN-LAST:event_CampoUserKeyPressed
+
+    private void campoPass1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPass1KeyPressed
+        if(evt.getKeyCode()==VK_ENTER) {
+            campoPass2.requestFocus();
+        }
+    }//GEN-LAST:event_campoPass1KeyPressed
+
+    private void campoPass2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPass2KeyPressed
+        if(evt.getKeyCode()==VK_ENTER) {
+            btnProcesar.requestFocus();
+        }
+    }//GEN-LAST:event_campoPass2KeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CampoNombreEmpleado;
@@ -542,22 +563,13 @@ TableRowSorter trs;
     private static final Logger LOG = Logger.getLogger(UsuariosCrud.class.getName());
 
     private void actualizarTabla() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
-
-        GrupoBotones = new javax.swing.ButtonGroup();
+         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
         ContadorPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("ContadorPU").createEntityManager();
         usuariosQuery = java.beans.Beans.isDesignTime() ? null : ContadorPUEntityManager.createQuery("SELECT u FROM Usuarios u");
         usuariosList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : usuariosQuery.getResultList();
-        
         tablaEmpleados = new javax.swing.JTable();
-
-        
-
-       
-
-        
+        campoUsuario = new javax.swing.JTextField();
         tablaEmpleados.getTableHeader().setReorderingAllowed(false);
-
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, usuariosList, tablaEmpleados);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idusuario}"));
         columnBinding.setColumnName("Idusuario");
@@ -570,6 +582,9 @@ TableRowSorter trs;
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         tablaEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaEmpleadosMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tablaEmpleadosMousePressed(evt);
             }
@@ -580,8 +595,7 @@ TableRowSorter trs;
             tablaEmpleados.getColumnModel().getColumn(0).setPreferredWidth(40);
             tablaEmpleados.getColumnModel().getColumn(0).setMaxWidth(40);
         }
-
+        bindingGroup.bind();
       
-//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
