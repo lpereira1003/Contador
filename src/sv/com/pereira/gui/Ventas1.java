@@ -41,6 +41,8 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import static net.sf.jasperreports.engine.util.JRLoader.loadObjectFromFile;
 import net.sf.jasperreports.view.JasperViewer;
+
+import static sv.com.pereira.gui.Principal.jDesktopPane1;
 import pojos.Clientes;
 import pojos.Empresas;
 import pojos.Impuestos;
@@ -52,8 +54,7 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         PlaceHolder holder = new PlaceHolder(campoSeleccionEmpresa, "Nombre de Empresa o NRC");
         PlaceHolder holder1 = new PlaceHolder(campoSeleccionCliente, "Nombre de Cliente o NRC");
         PlaceHolder holder2 = new PlaceHolder(campoBuscoTransaccion, "# de Documento");
-        PlaceHolder holder3 = new PlaceHolder(campoDocVta, "# Documento de Venta");
-        PlaceHolder holder4 = new PlaceHolder(campoGravado, "Valor Monetario");
+   
         grupoTipoVtas.add(chkCCF);
         grupoTipoVtas.add(chkFCF);
         grupoTipoVtas.add(chkTKT);
@@ -96,12 +97,14 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         lbl_iva = new javax.swing.JLabel();
         lblPercepcion = new javax.swing.JLabel();
         campoGravado = new javax.swing.JTextField();
-        campoDocVta = new javax.swing.JTextField();
+        campoDocVtaI = new javax.swing.JTextField();
         CampoIva = new javax.swing.JTextField();
         campoTotalVta = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         campoPercepcion = new javax.swing.JTextField();
         btnGuardarCompra = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        campoDocVtaF = new javax.swing.JTextField();
         panelconfigProceso = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         chkTKT = new javax.swing.JCheckBox();
@@ -120,6 +123,7 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        btnNuevoCliente = new javax.swing.JToggleButton();
 
         setBackground(new java.awt.Color(204, 255, 204));
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -244,7 +248,7 @@ public class Ventas1 extends javax.swing.JInternalFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "idVta", "Empresa", "# Doc", "T.Vta", "Grav", "IVA", "Percep", "total Vta"
+                "idVta", "F. Vta", "# Doc", "T.Vta", "Grav", "IVA", "Percep", "total Vta"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -370,10 +374,10 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Ingreso transacciones"));
 
         jLabel10.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel10.setText("# doc");
+        jLabel10.setText("# doc I");
 
         lblGravado_total.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        lblGravado_total.setText("Gravado");
+        lblGravado_total.setText("Grav.");
 
         lbl_iva.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lbl_iva.setText("IVA");
@@ -391,13 +395,13 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             }
         });
 
-        campoDocVta.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        campoDocVta.addKeyListener(new java.awt.event.KeyAdapter() {
+        campoDocVtaI.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        campoDocVtaI.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                campoDocVtaKeyPressed(evt);
+                campoDocVtaIKeyPressed(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoDocVtaKeyTyped(evt);
+                campoDocVtaIKeyTyped(evt);
             }
         });
 
@@ -422,32 +426,49 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel13.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel13.setText("# doc F");
+
+        campoDocVtaF.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        campoDocVtaF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoDocVtaFKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblGravado_total)
-                            .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(campoGravado)
-                            .addComponent(campoDocVta)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblGravado_total)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(campoGravado)
+                                    .addComponent(campoDocVtaI)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblPercepcion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel14)
+                                    .addComponent(lbl_iva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnGuardarCompra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(campoTotalVta)
+                                    .addComponent(campoPercepcion)
+                                    .addComponent(CampoIva)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblPercepcion)
-                            .addComponent(jLabel14)
-                            .addComponent(lbl_iva))
+                        .addContainerGap()
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnGuardarCompra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(campoTotalVta)
-                            .addComponent(campoPercepcion)
-                            .addComponent(CampoIva))))
+                        .addComponent(campoDocVtaF)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -456,7 +477,11 @@ public class Ventas1 extends javax.swing.JInternalFrame {
                 .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(campoDocVta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoDocVtaI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(campoDocVtaF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblGravado_total)
@@ -473,9 +498,9 @@ public class Ventas1 extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(campoTotalVta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addComponent(btnGuardarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnGuardarCompra)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panelconfigProceso.setBackground(new java.awt.Color(51, 153, 255));
@@ -507,6 +532,25 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         chkCCF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chkCCFActionPerformed(evt);
+            }
+        });
+
+        calendario.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                calendarioFocusLost(evt);
+            }
+        });
+        calendario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                calendarioMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                calendarioMousePressed(evt);
+            }
+        });
+        calendario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                calendarioKeyPressed(evt);
             }
         });
 
@@ -545,7 +589,7 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             .addGroup(panelconfigProcesoLayout.createSequentialGroup()
                 .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(calendario, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                .addComponent(calendario, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                 .addGap(4, 4, 4)
                 .addGroup(panelconfigProcesoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -616,10 +660,9 @@ public class Ventas1 extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btnCreditoFiscal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnConsuFinal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEliminarTransacc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnCreditoFiscal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsuFinal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEliminarTransacc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -627,13 +670,13 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addComponent(btnEliminarTransacc)
-                .addGap(20, 20, 20)
+                .addGap(15, 15, 15)
                 .addComponent(btnConsuFinal)
-                .addGap(20, 20, 20)
+                .addGap(15, 15, 15)
                 .addComponent(btnCreditoFiscal)
-                .addGap(20, 20, 20)
+                .addGap(15, 15, 15)
                 .addComponent(btnSalir)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(15, 15, 15))
         );
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
@@ -642,14 +685,23 @@ public class Ventas1 extends javax.swing.JInternalFrame {
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
 
+        btnNuevoCliente.setText("Nuevo Cliente");
+        btnNuevoCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoClienteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 981, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -661,43 +713,47 @@ public class Ventas1 extends javax.swing.JInternalFrame {
                                         .addGap(3, 3, 3)))
                                 .addGap(6, 6, 6))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel11)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(campoSeleccionCliente)))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                                 .addGap(7, 7, 7))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel12)
                                 .addGap(14, 14, 14)
                                 .addComponent(campoSeleccionEmpresa)
-                                .addGap(13, 13, 13)))
+                                .addGap(13, 13, 13))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(campoSeleccionCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnNuevoCliente)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addComponent(panelconfigProceso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(6, 6, 6))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(4, 4, 4)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblDataIng, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(5, 5, 5)
+                                        .addComponent(panelconfigProceso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(6, 6, 6))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(4, 4, 4)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jLabel9)
+                                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(campoBuscoTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(73, 73, 73)
+                                            .addComponent(jLabel9))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(campoBuscoTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(20, 20, 20))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(23, 23, 23))
+                                .addGap(246, 246, 246)
+                                .addComponent(lblDataIng, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -721,20 +777,22 @@ public class Ventas1 extends javax.swing.JInternalFrame {
                             .addComponent(campoBuscoTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9)))
                     .addComponent(panelconfigProceso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(campoSeleccionCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnNuevoCliente)
+                                .addComponent(campoSeleccionCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel11)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(20, 20, 20))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         jLabel1.getAccessibleContext().setAccessibleName("Ventas");
@@ -760,10 +818,10 @@ public class Ventas1 extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_formInternalFrameClosed
 
-    private void campoDocVtaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDocVtaKeyTyped
+    private void campoDocVtaIKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDocVtaIKeyTyped
         // TODO add your handling code here:
          
-    }//GEN-LAST:event_campoDocVtaKeyTyped
+    }//GEN-LAST:event_campoDocVtaIKeyTyped
 
     private void campoGravadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoGravadoKeyTyped
         // TODO add your handling code here:
@@ -850,6 +908,9 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         EntityManagerFactory emf = createEntityManagerFactory("ContadorPU");
         EntityManager em = emf.createEntityManager();
+        boolean tkt = chkTKT.isSelected();
+        boolean fcf = chkFCF.isSelected();
+        boolean ccf = chkCCF.isSelected();
         int filaEmpresa = tablaEmpresas.getSelectedRow();
         int filaClientes1 = tablaClientes.getSelectedRow();
         if(filaEmpresa==-1){
@@ -857,14 +918,6 @@ public class Ventas1 extends javax.swing.JInternalFrame {
            limpiarcamposTransacciones();
            return;
         }
-        if(campoDocVta.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "ingrese # de documento de Vta");
-            campoDocVta.requestFocus();
-            return;
-        }
-        boolean tkt = chkTKT.isSelected();
-        boolean fcf = chkFCF.isSelected();
-        boolean ccf = chkCCF.isSelected();
         if((tkt==false) && (fcf==false) && (ccf==false)){
           JOptionPane.showMessageDialog(this, "Seleccione el TIPO Vta");            
             return;
@@ -873,6 +926,24 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Seleccione CLIENTE para esta VENTA");
             return;
         }
+        
+        if(campoDocVtaI.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "ingrese # Inicial en Vta");
+            campoDocVtaI.requestFocus();
+            return;
+        }
+       if((chkTKT.isSelected()||chkFCF.isSelected())&& campoDocVtaF.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "ingrese # Final en Vta");
+            campoDocVtaF.requestFocus();
+            return;
+       }
+         if(campoGravado.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "valor Gravado es nulo \n"
+                                              + "Puede Ingresar 0.00 si NO hay VTA");
+            campoGravado.requestFocus();
+            return;
+        }
+        
         Calendar now = Calendar.getInstance();
         Date fechaSistema = new Date();
         Date fechaProceso=calendario.getDate();
@@ -902,9 +973,11 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         }
         
         Ventas ventas = new Ventas();
+        Ventas ventasTKTFCF=new Ventas();
         if(chkTKT.isSelected()||chkFCF.isSelected()){
             Clientes clienteidTKT = em.find(Clientes.class,10 );
-           ventas.setIdcliente(clienteidTKT);
+            ventas.setIdcliente(clienteidTKT);
+            ventasTKTFCF.setIdcliente(clienteidTKT);
         }else{// seleccionar de tabla clientes
             int filaClientes = tablaClientes.getSelectedRow();
             String idclientes = tablaClientes.getValueAt(filaClientes, 0).toString();
@@ -917,12 +990,25 @@ public class Ventas1 extends javax.swing.JInternalFrame {
        int idempresa1 = Integer.parseInt(idempresa);
        Empresas empresaid=em.find(Empresas.class, idempresa1);
        ventas.setIdempresa(empresaid);
+       ventasTKTFCF.setIdempresa(empresaid);
        if(chkTKT.isSelected()){
             ventas.setTipoventa("TKT");
             ventas.setGravado(new BigDecimal(CampoIva.getText()));
             ventas.setValorventa(new BigDecimal(campoTotalVta.getText()));
             ventas.setValoriva(new BigDecimal(campoPercepcion.getText()));
             ventas.setValorpercepcion(new BigDecimal(0.00));
+            ventas.setNumdocvta(campoDocVtaI.getText());
+            ventas.setFechaventa(calendario.getDate());
+            ventas.setFechadigita(new Date());
+            //**
+            ventasTKTFCF.setTipoventa("TKT");// num final
+            ventasTKTFCF.setGravado(new BigDecimal(0.00));
+            ventasTKTFCF.setValorventa(new BigDecimal(0.00));
+            ventasTKTFCF.setValoriva(new BigDecimal(0.00));
+            ventasTKTFCF.setValorpercepcion(new BigDecimal(0.00));
+            ventasTKTFCF.setNumdocvta(campoDocVtaF.getText());
+            ventasTKTFCF.setFechaventa(calendario.getDate());
+            ventasTKTFCF.setFechadigita(new Date());
        }
        if(chkFCF.isSelected()){
             ventas.setTipoventa("FCF");
@@ -930,6 +1016,18 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             ventas.setValorventa(new BigDecimal(campoTotalVta.getText()));
             ventas.setValoriva(new BigDecimal(campoPercepcion.getText()));
             ventas.setValorpercepcion(new BigDecimal(0.00));
+            ventas.setNumdocvta(campoDocVtaI.getText());
+            ventas.setFechaventa(calendario.getDate());
+            ventas.setFechadigita(new Date());
+            //***
+            ventasTKTFCF.setTipoventa("FCF");//num final
+            ventasTKTFCF.setGravado(new BigDecimal(0.00));
+            ventasTKTFCF.setValorventa(new BigDecimal(0.00));
+            ventasTKTFCF.setValoriva(new BigDecimal(0.00));
+            ventasTKTFCF.setValorpercepcion(new BigDecimal(0.00));
+            ventasTKTFCF.setNumdocvta(campoDocVtaF.getText());
+            ventasTKTFCF.setFechaventa(calendario.getDate());
+            ventasTKTFCF.setFechadigita(new Date());
        } 
        if(chkCCF.isSelected()){
             ventas.setTipoventa("CCF");
@@ -937,24 +1035,30 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             ventas.setValorventa(new BigDecimal(campoTotalVta.getText()));
             ventas.setValoriva(new BigDecimal(CampoIva.getText()));
             ventas.setValorpercepcion(new BigDecimal(campoPercepcion.getText()));
+            ventas.setNumdocvta(campoDocVtaI.getText());
+            ventas.setFechaventa(calendario.getDate());
+            ventas.setFechadigita(new Date());
             incrementaDoc();
        }
-       ventas.setFechaventa(calendario.getDate());
-       ventas.setFechadigita(new Date());
-       ventas.setNumdocvta(campoDocVta.getText());
+
        EntityTransaction tx = em.getTransaction();
        tx.begin();
         try {
+            if(chkTKT.isSelected()||chkFCF.isSelected()){
+               em.persist(ventasTKTFCF); 
+            }
             em.persist(ventas);
+            
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
             tx.rollback();
         }
-        limpiarcamposTransacciones();
+        //limpiarcamposTransacciones();
         try {
             cargarDatadigitada();
         } catch (ParseException ex) {
+            
             Logger.getLogger(Ventas1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnGuardarCompraActionPerformed
@@ -967,6 +1071,8 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             lblPercepcion.setText("Percep.");
             lbl_iva.setText("IVA");
             limpiarcamposTransacciones();
+            campoDocVtaF.enable(false);
+            limpiarCamposTotales();
         }
     }//GEN-LAST:event_chkCCFActionPerformed
 
@@ -1019,6 +1125,9 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             lbl_iva.setText("Gravado");
             lblPercepcion.setText("IVA");
             limpiarcamposTransacciones();
+            campoDocVtaF.enable();
+            limpiarCamposTotales();
+            //limpiarcamposTransacciones();
         }
     }//GEN-LAST:event_chkTKTActionPerformed
 
@@ -1029,6 +1138,7 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             lbl_iva.setText("Gravado");
             lblPercepcion.setText("IVA");
             limpiarcamposTransacciones();
+            campoDocVtaF.enable();
         }
     }//GEN-LAST:event_chkFCFActionPerformed
 
@@ -1210,12 +1320,64 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void campoDocVtaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDocVtaKeyPressed
+    private void campoDocVtaIKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDocVtaIKeyPressed
         if(evt.getKeyCode()==VK_ENTER) {
-            campoGravado.requestFocus();
+            if(chkTKT.isSelected()|| chkFCF.isSelected())
+            {
+                campoDocVtaF.requestFocus();
+            }
+            else 
+            {
+                campoGravado.requestFocus();
+            }
         }  // TODO add your handling code here:
-    }//GEN-LAST:event_campoDocVtaKeyPressed
+    }//GEN-LAST:event_campoDocVtaIKeyPressed
 
+    private void campoDocVtaFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDocVtaFKeyPressed
+        // TODO add your handling code here:
+       if(evt.getKeyCode()==VK_ENTER){
+           campoGravado.requestFocus();
+       }
+    }//GEN-LAST:event_campoDocVtaFKeyPressed
+
+    private void calendarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calendarioMouseClicked
+        // TODO add your handling code here:
+        System.out.println("has hecho click en calendario");
+       
+    }//GEN-LAST:event_calendarioMouseClicked
+
+    private void calendarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calendarioMousePressed
+        // TODO add your handling code here:
+        campoDocVtaI.requestFocus();
+    }//GEN-LAST:event_calendarioMousePressed
+
+    private void calendarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_calendarioKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_calendarioKeyPressed
+
+    private void calendarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_calendarioFocusLost
+        // TODO add your handling code here:
+    
+    }//GEN-LAST:event_calendarioFocusLost
+
+    private void btnNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoClienteActionPerformed
+        this.dispose();
+
+        ClientesToVentas contribuyentes1 = new ClientesToVentas();
+        jDesktopPane1.add(contribuyentes1);
+        //jDesktopPane1.getDesktopManager().maximizeFrame(contribuyentes1);
+        contribuyentes1.setVisible(true);
+        contribuyentes1.setIconifiable(true);
+        contribuyentes1.setMaximizable(true);
+        contribuyentes1.setClosable(true);
+        contribuyentes1.setResizable(true); 
+        contribuyentes1.toFront();
+    }//GEN-LAST:event_btnNuevoClienteActionPerformed
+
+    
+    
+    
+    
     TableRowSorter trs;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CampoIva;
@@ -1224,10 +1386,12 @@ public class Ventas1 extends javax.swing.JInternalFrame {
     private javax.swing.JToggleButton btnCreditoFiscal;
     private javax.swing.JToggleButton btnEliminarTransacc;
     private javax.swing.JButton btnGuardarCompra;
+    private javax.swing.JToggleButton btnNuevoCliente;
     private javax.swing.JToggleButton btnSalir;
     private com.toedter.calendar.JCalendar calendario;
     private javax.swing.JTextField campoBuscoTransaccion;
-    private javax.swing.JTextField campoDocVta;
+    private javax.swing.JTextField campoDocVtaF;
+    private javax.swing.JTextField campoDocVtaI;
     private javax.swing.JTextField campoGravado;
     private javax.swing.JTextField campoPercepcion;
     private javax.swing.JTextField campoSeleccionCliente;
@@ -1249,6 +1413,7 @@ public class Ventas1 extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
@@ -1282,14 +1447,17 @@ public class Ventas1 extends javax.swing.JInternalFrame {
     campoGravado.setText("");
     campoTotalVta.setText("0.00");
     campoPercepcion.setText("0.00");
-    //campoDocVta.setText("");
-    campoDocVta.requestFocus();
+    campoDocVtaF.setText("");
+    campoDocVtaI.setText("");
+    campoDocVtaI.requestFocus();
+    
     }
 
     private void incrementaDoc() {
-        int correlativo = Integer.parseInt(campoDocVta.getText());
+        int correlativo = Integer.parseInt(campoDocVtaI.getText());
         correlativo=correlativo+1;
-        campoDocVta.setText(""+correlativo);
+        campoDocVtaI.setText(""+correlativo);
+        limpiarcamposTransaccionesCCF();
     }
 
     private void cargarDatadigitada() throws ParseException {
@@ -1346,13 +1514,14 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             {
                 String idvta = ventas.getIdventa().toString();
                 String nomEmpresa = ventas.getIdempresa().getNombre();
+                String fechaVenta1=ventas.getFechaventa().toLocaleString();
                 String numDoc = ventas.getNumdocvta();
                 String tipoVta = ventas.getTipoventa();
                 String grav = ventas.getGravado().toString();
                 String iva = ventas.getValoriva().toString();
                 String percep = ventas.getValorpercepcion().toString();
                 String percep1 = ventas.getValorventa().toString();
-                Object FilaElemento[] = {idvta, nomEmpresa, numDoc, tipoVta, grav, iva, percep, percep1 };
+                Object FilaElemento[] = {idvta, fechaVenta1, numDoc, tipoVta, grav, iva, percep, percep1 };
                 tablaFactura.addRow(FilaElemento);
                 totalIva=totalIva+Double.parseDouble(iva);
                 totalPercepcion=totalPercepcion+Double.parseDouble(percep);
@@ -1371,5 +1540,17 @@ public class Ventas1 extends javax.swing.JInternalFrame {
     campoTotalIva.setText("0.00");
     campoTotalPercepcion.setText("0.00");
     campoTotalTotales.setText("0.00");
+    campoDocVtaI.setText("");
+    campoDocVtaF.setText("");
+    }
+
+    private void limpiarcamposTransaccionesCCF() {
+        CampoIva.setText("0.00");
+    campoGravado.setText("");
+    campoTotalVta.setText("0.00");
+    campoPercepcion.setText("0.00");
+    campoDocVtaF.setText("");
+    //campoDocVtaI.setText("");
+    campoDocVtaI.requestFocus();
     }
 }
