@@ -8,11 +8,13 @@ package pojos;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,6 +23,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import static javax.persistence.TemporalType.DATE;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -45,7 +48,7 @@ public class Ventas implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "idventa")
     private Integer idventa;
@@ -61,10 +64,10 @@ public class Ventas implements Serializable {
     @Column(name = "tipoventa")
     private String tipoventa;
     @Column(name = "fechaventa")
-    @Temporal(TemporalType.DATE)
+    @Temporal(DATE)
     private Date fechaventa;
     @Column(name = "fechadigita")
-    @Temporal(TemporalType.DATE)
+    @Temporal(DATE)
     private Date fechadigita;
     @Basic(optional = false)
     @Column(name = "numdocvta")
@@ -76,102 +79,202 @@ public class Ventas implements Serializable {
     @ManyToOne
     private Empresas idempresa;
 
+    /**
+     *
+     */
     public Ventas() {
     }
 
+    /**
+     *
+     * @param idventa
+     */
     public Ventas(Integer idventa) {
         this.idventa = idventa;
     }
 
+    /**
+     *
+     * @param idventa
+     * @param numdocvta
+     */
     public Ventas(Integer idventa, String numdocvta) {
         this.idventa = idventa;
         this.numdocvta = numdocvta;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getIdventa() {
         return idventa;
     }
 
+    /**
+     *
+     * @param idventa
+     */
     public void setIdventa(Integer idventa) {
         this.idventa = idventa;
     }
 
+    /**
+     *
+     * @return
+     */
     public BigDecimal getGravado() {
         return gravado;
     }
 
+    /**
+     *
+     * @param gravado
+     */
     public void setGravado(BigDecimal gravado) {
         this.gravado = gravado;
     }
 
+    /**
+     *
+     * @return
+     */
     public BigDecimal getValorventa() {
         return valorventa;
     }
 
+    /**
+     *
+     * @param valorventa
+     */
     public void setValorventa(BigDecimal valorventa) {
         this.valorventa = valorventa;
     }
 
+    /**
+     *
+     * @return
+     */
     public BigDecimal getValoriva() {
         return valoriva;
     }
 
+    /**
+     *
+     * @param valoriva
+     */
     public void setValoriva(BigDecimal valoriva) {
         this.valoriva = valoriva;
     }
 
+    /**
+     *
+     * @return
+     */
     public BigDecimal getValorpercepcion() {
         return valorpercepcion;
     }
 
+    /**
+     *
+     * @param valorpercepcion
+     */
     public void setValorpercepcion(BigDecimal valorpercepcion) {
         this.valorpercepcion = valorpercepcion;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getTipoventa() {
         return tipoventa;
     }
 
+    /**
+     *
+     * @param tipoventa
+     */
     public void setTipoventa(String tipoventa) {
         this.tipoventa = tipoventa;
     }
 
+    /**
+     *
+     * @return
+     */
     public Date getFechaventa() {
         return fechaventa;
     }
 
+    /**
+     *
+     * @param fechaventa
+     */
     public void setFechaventa(Date fechaventa) {
         this.fechaventa = fechaventa;
     }
 
+    /**
+     *
+     * @return
+     */
     public Date getFechadigita() {
         return fechadigita;
     }
 
+    /**
+     *
+     * @param fechadigita
+     */
     public void setFechadigita(Date fechadigita) {
         this.fechadigita = fechadigita;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNumdocvta() {
         return numdocvta;
     }
 
+    /**
+     *
+     * @param numdocvta
+     */
     public void setNumdocvta(String numdocvta) {
         this.numdocvta = numdocvta;
     }
 
+    /**
+     *
+     * @return
+     */
     public Clientes getIdcliente() {
         return idcliente;
     }
 
+    /**
+     *
+     * @param idcliente
+     */
     public void setIdcliente(Clientes idcliente) {
         this.idcliente = idcliente;
     }
 
+    /**
+     *
+     * @return
+     */
     public Empresas getIdempresa() {
         return idempresa;
     }
 
+    /**
+     *
+     * @param idempresa
+     */
     public void setIdempresa(Empresas idempresa) {
         this.idempresa = idempresa;
     }
@@ -190,15 +293,13 @@ public class Ventas implements Serializable {
             return false;
         }
         Ventas other = (Ventas) object;
-        if ((this.idventa == null && other.idventa != null) || (this.idventa != null && !this.idventa.equals(other.idventa))) {
-            return false;
-        }
-        return true;
+        return !((this.idventa == null && other.idventa != null) || (this.idventa != null && !this.idventa.equals(other.idventa)));
     }
 
     @Override
     public String toString() {
         return "pojos.Ventas[ idventa=" + idventa + " ]";
     }
+    private static final Logger LOG = Logger.getLogger(Ventas.class.getName());
     
 }

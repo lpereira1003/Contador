@@ -6,7 +6,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.VK_ENTER;
 import static java.lang.Double.parseDouble;
+import static java.lang.Integer.parseInt;
 import static java.lang.String.format;
+import static java.lang.System.out;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import static java.sql.DriverManager.getConnection;
@@ -17,18 +19,21 @@ import java.sql.Statement;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import static java.util.Calendar.MONTH;
+import static java.util.Calendar.YEAR;
+import static java.util.Calendar.getInstance;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
+import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
+import static java.util.logging.Logger.getLogger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import static javax.persistence.Persistence.createEntityManagerFactory;
 import javax.persistence.Query;
-import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.RowFilter;
 import static javax.swing.RowFilter.orFilter;
@@ -41,12 +46,11 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import static net.sf.jasperreports.engine.util.JRLoader.loadObjectFromFile;
 import net.sf.jasperreports.view.JasperViewer;
-
-import static sv.com.pereira.gui.Principal.jDesktopPane1;
 import pojos.Clientes;
 import pojos.Empresas;
 import pojos.Impuestos;
 import pojos.Ventas;
+import static sv.com.pereira.gui.Principal.jDesktopPane1;
 
 public class Ventas1 extends javax.swing.JInternalFrame {
     public Ventas1() {
@@ -58,6 +62,7 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         grupoTipoVtas.add(chkCCF);
         grupoTipoVtas.add(chkFCF);
         grupoTipoVtas.add(chkTKT);
+        Date fechaProceso1=calendario.getDate();
     }
 
     @SuppressWarnings("unchecked")
@@ -105,7 +110,6 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         btnGuardarCompra = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         campoDocVtaF = new javax.swing.JTextField();
-        campoFechaProceso = new javax.swing.JTextField();
         panelconfigProceso = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         chkTKT = new javax.swing.JCheckBox();
@@ -462,13 +466,10 @@ public class Ventas1 extends javax.swing.JInternalFrame {
                                     .addComponent(lbl_iva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnGuardarCompra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(campoTotalVta, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
                                     .addComponent(campoPercepcion)
-                                    .addComponent(CampoIva)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(campoFechaProceso)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnGuardarCompra))))
+                                    .addComponent(CampoIva)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -504,9 +505,7 @@ public class Ventas1 extends javax.swing.JInternalFrame {
                     .addComponent(jLabel14)
                     .addComponent(campoTotalVta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardarCompra)
-                    .addComponent(campoFechaProceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnGuardarCompra)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -829,11 +828,12 @@ public class Ventas1 extends javax.swing.JInternalFrame {
 
     private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
         // TODO add your handling code here:
+         //campoFechaProceso.setText(calendario.getDate().toGMTString());
 
     }//GEN-LAST:event_formInternalFrameClosed
 
     private void campoDocVtaIKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDocVtaIKeyTyped
-        // TODO add your handling code here:
+   
          
     }//GEN-LAST:event_campoDocVtaIKeyTyped
 
@@ -849,12 +849,12 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         int filaEmpresas = tablaEmpresas.getSelectedRow();
         int filaClientes = tablaClientes.getSelectedRow();
         if(filaEmpresas==-1){
-           JOptionPane.showMessageDialog(this,"Seleccione empresa");
+            showMessageDialog(this,"Seleccione empresa");
            limpiarcamposTransacciones();
            return;
        }
         if(chkCCF.isSelected()&& filaClientes==-1){
-            JOptionPane.showMessageDialog(this,"Seleccione Cliente");
+            showMessageDialog(this,"Seleccione Cliente");
            limpiarcamposTransacciones();
            return; 
         }
@@ -929,60 +929,59 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         int filaClientes1 = tablaClientes.getSelectedRow();
         
         if((tkt==false) && (fcf==false) && (ccf==false)){
-          JOptionPane.showMessageDialog(this, "Seleccione el TIPO Vta");            
+            showMessageDialog(this, "Seleccione el TIPO Vta");            
             return;
         }
         
         if(filaEmpresa==-1){
-           JOptionPane.showMessageDialog(this,"Seleccione empresa");
+            showMessageDialog(this,"Seleccione empresa");
            limpiarcamposTransacciones();
            return;
         }
         if(chkCCF.isSelected()&& filaClientes1==-1){
-            JOptionPane.showMessageDialog(this, "Seleccione CLIENTE para esta VENTA");
+            showMessageDialog(this, "Seleccione CLIENTE para esta VENTA");
             return;
         }
         
         if(campoDocVtaI.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "ingrese # Inicial en Vta");
+            showMessageDialog(this, "ingrese # Inicial en Vta");
             campoDocVtaI.requestFocus();
             return;
         }
        if((chkTKT.isSelected()||chkFCF.isSelected())&& campoDocVtaF.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "ingrese # Final en Vta");
+            showMessageDialog(this, "ingrese # Final en Vta");
             campoDocVtaF.requestFocus();
             return;
        }
          if(campoGravado.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "valor Gravado es nulo \n"
+            showMessageDialog(this, "valor Gravado es nulo \n"
                                               + "Puede Ingresar 0.00 si NO hay VTA");
             campoGravado.requestFocus();
             return;
         }
         
-        Calendar now = Calendar.getInstance();
+        Calendar now = getInstance();
         Date fechaSistema = new Date();
         Date fechaProceso=calendario.getDate();
         
-        System.out.println("fecha del sistema.. "+fechaSistema);
-        System.out.println("Fecha digitacion... "+fechaProceso);
+        out.println("fecha del sistema.. "+fechaSistema);
+        out.println("Fecha digitacion... "+fechaProceso);
         int comparoFechas = fechaSistema.compareTo(fechaProceso);
-        System.out.println("Resultado de compracion es "+comparoFechas);
         if(comparoFechas<0){
-           JOptionPane.showMessageDialog(this,"La Fecha de Venta MAYOR a Fecha del PC\n"
+            showMessageDialog(this,"La Fecha de Venta MAYOR a Fecha del PC\n"
                                              + "No Puedo procesar este dato \n"                                             
                                              + "Verifique que fecha del PC sea Correcta..");
            return;
         }
-        int mesActual = now.get(Calendar.MONTH)+1;
+        int mesActual = now.get(MONTH)+1;
         int ventaAnticipada = mesActual+1;
-        int anno = now.get(Calendar.YEAR);
+        int anno = now.get(YEAR);
         int mesdigita = calendario.getDate().getMonth()+1;
-        System.out.println("mes en la pc.... "+mesActual);
-        System.out.println("mes digitacion.. "+mesdigita);
+        out.println("mes en la pc.... "+mesActual);
+        out.println("mes digitacion.. "+mesdigita);
         
         if(mesActual==mesdigita){
-            JOptionPane.showMessageDialog(this,"Estás ingresando una venta anticipada en mes.... "+(ventaAnticipada-1)
+            showMessageDialog(this,"Estás ingresando una venta anticipada en mes.... "+(ventaAnticipada-1)
                                              +"\n"                                            
                                              + "Verifiquelo en Reporte Histórico............... \n"                                             
                                              + "La transaccion sera mostrada si PC = mes ...... " +ventaAnticipada);
@@ -998,13 +997,13 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         }else{// seleccionar de tabla clientes
             int filaClientes = tablaClientes.getSelectedRow();
             String idclientes = tablaClientes.getValueAt(filaClientes, 0).toString();
-            int idcliente1 = Integer.parseInt(idclientes);
+            int idcliente1 = parseInt(idclientes);
             Clientes clienteid = em.find(Clientes.class,idcliente1 );
             ventas.setIdcliente(clienteid);
         }
        int filaClientes = tablaEmpresas.getSelectedRow();
        String idempresa = tablaEmpresas.getValueAt(filaClientes, 0).toString();
-       int idempresa1 = Integer.parseInt(idempresa);
+       int idempresa1 = parseInt(idempresa);
        Empresas empresaid=em.find(Empresas.class, idempresa1);
        ventas.setIdempresa(empresaid);
        ventasTKTFCF.setIdempresa(empresaid);
@@ -1068,16 +1067,16 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             
             tx.commit();
         } catch (Exception e) {
-            e.printStackTrace();
             tx.rollback();
         }
        
         try {
             cargarDatadigitada();
              limpiarcamposTransacciones();
+             irUltimoRegistro();
         } catch (ParseException ex) {
             
-            Logger.getLogger(Ventas1.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(Ventas1.class.getName()).log(SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnGuardarCompraActionPerformed
 
@@ -1170,8 +1169,7 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             limpiarCamposTotales();
             cargarDatadigitada();
         } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, "No hay Data");
-            return;
+            showMessageDialog(this, "No hay Data");
             //Logger.getLogger(Ventas1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_tablaEmpresasMouseClicked
@@ -1210,11 +1208,11 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         EntityManager em = emf.createEntityManager();
         int fila = tablaDatosIngresados.getSelectedRow();
         if(fila==-1){
-            JOptionPane.showMessageDialog(this,"Seleccione Transaccion a ELIMINAR");
+            showMessageDialog(this,"Seleccione Transaccion a ELIMINAR");
             return;
         }
         String idVta = tablaDatosIngresados.getValueAt(fila, 0).toString();
-        int idVta1 = Integer.parseInt(idVta);
+        int idVta1 = parseInt(idVta);
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try {
@@ -1222,7 +1220,6 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         em.remove(ventaBorrar);
             tx.commit();
          } catch (Exception e){
-            e.printStackTrace();
             tx.rollback();
          }finally{
             em.close();
@@ -1232,7 +1229,7 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             try {
                 cargarDatadigitada();
             } catch (ParseException ex) {
-                Logger.getLogger(Ventas1.class.getName()).log(Level.SEVERE, null, ex);
+                getLogger(Ventas1.class.getName()).log(SEVERE, null, ex);
             }
         }
         
@@ -1242,20 +1239,18 @@ public class Ventas1 extends javax.swing.JInternalFrame {
     private void btnConsuFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsuFinalActionPerformed
         int fila = tablaEmpresas.getSelectedRow();
         if(fila==-1){
-            JOptionPane.showMessageDialog(this,"Seleccione Empresa");
+            showMessageDialog(this,"Seleccione Empresa");
             return;
         }
         String idEmpresa = tablaEmpresas.getValueAt(fila, 0).toString();
-        int idEmpresa1 = Integer.parseInt(idEmpresa);        
-        Calendar now = Calendar.getInstance();
-        int mes = now.get(Calendar.MONTH);
-        System.out.println("mes para reporte es.. "+mes);
-        int anno = now.get(Calendar.YEAR);
+        int idEmpresa1 = parseInt(idEmpresa);        
+        Calendar now = getInstance();
+        int mes = now.get(MONTH);
+        int anno = now.get(YEAR);
         if(mes==0){
-            anno=anno-1;
+            anno -= 1;
             mes=12;
-            System.out.println("nuevo ano mificado.... = "+anno);
-            System.out.println("Nuevo MES modificado.. = "+mes);
+            out.println("nuevo ano mificado.... = "+anno);
         }
         //System.out.println("ano para REPORTE es .. "+anno);
         Connection conn = null;
@@ -1280,12 +1275,12 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         viewer.setSize(900, 600);
         viewer.setVisible(true);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this,"No encuentro archivo de Reporte");
+            showMessageDialog(this,"No encuentro archivo de Reporte");
         }
         try {
             conn.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this,"Error en Base de datos");
+            showMessageDialog(this,"Error en Base de datos");
         }
     }//GEN-LAST:event_btnConsuFinalActionPerformed
 
@@ -1293,14 +1288,14 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         int fila = tablaEmpresas.getSelectedRow();
         if(fila==-1){
-            JOptionPane.showMessageDialog(this,"Seleccione Empresa");
+            showMessageDialog(this,"Seleccione Empresa");
             return;
         }
         String idEmpresa = tablaEmpresas.getValueAt(fila, 0).toString();
-        int idEmpresa1 = Integer.parseInt(idEmpresa);        
-        Calendar now = Calendar.getInstance();
-        int mes = now.get(Calendar.MONTH);
-        int anno = now.get(Calendar.YEAR);
+        int idEmpresa1 = parseInt(idEmpresa);        
+        Calendar now = getInstance();
+        int mes = now.get(MONTH);
+        int anno = now.get(YEAR);
         Connection conn = null;
         PreparedStatement prepSt = null;
         Statement st = null;
@@ -1313,23 +1308,23 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         try {
             JasperReport reporte = (JasperReport) loadObjectFromFile("Reportes\\LibroVentasAContribuyentes.jasper");
             Map valores = new HashMap();
-        valores.put ( "MES" , mes );
-        valores.put ( "ANNO" , anno );
-        valores.put ( "IDEMPRESA" , idEmpresa1 );
-        JasperPrint jasperPrint = fillReport(reporte, valores, conn);
-        JasperViewer viewer = new JasperViewer(jasperPrint, false);
-        viewer.toFront();
-        viewer.setTitle("Reporte ventas a Contribuyentes");
-        viewer.setSize(1100, 600);
-        viewer.setVisible(true);
+            valores.put ( "MES" , mes );
+            valores.put ( "ANNO" , anno );
+            valores.put ( "IDEMPRESA" , idEmpresa1 );
+            JasperPrint jasperPrint = fillReport(reporte, valores, conn);
+            JasperViewer viewer = new JasperViewer(jasperPrint, false);
+            viewer.toFront();
+            viewer.setTitle("Reporte ventas a Contribuyentes");
+            viewer.setSize(1_100, 600);
+            viewer.setVisible(true);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this,"No encuentro archivo de Reporte");
+            showMessageDialog(this,"No encuentro archivo de Reporte");
         }
         try {
             conn.close();
         } catch (SQLException ex) {
             
-            JOptionPane.showMessageDialog(this,"Error en Base de datos");
+            showMessageDialog(this,"Error en Base de datos");
         }
     }//GEN-LAST:event_btnCreditoFiscalActionPerformed
 
@@ -1360,14 +1355,11 @@ public class Ventas1 extends javax.swing.JInternalFrame {
 
     private void calendarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calendarioMouseClicked
         // TODO add your handling code here:
-        System.out.println("has hecho click en calendario");
-        campoFechaProceso.setText(calendario.getDate().toLocaleString());
        
     }//GEN-LAST:event_calendarioMouseClicked
 
     private void calendarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calendarioMousePressed
-        // TODO add your handling code here:
-         campoFechaProceso.setText(calendario.getDate().toLocaleString());
+      
         campoDocVtaI.requestFocus();
     }//GEN-LAST:event_calendarioMousePressed
 
@@ -1395,9 +1387,6 @@ public class Ventas1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNuevoClienteActionPerformed
 
     
-    
-    
-    
     TableRowSorter trs;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CampoIva;
@@ -1412,7 +1401,6 @@ public class Ventas1 extends javax.swing.JInternalFrame {
     private javax.swing.JTextField campoBuscoTransaccion;
     private javax.swing.JTextField campoDocVtaF;
     private javax.swing.JTextField campoDocVtaI;
-    private javax.swing.JTextField campoFechaProceso;
     private javax.swing.JTextField campoGravado;
     private javax.swing.JTextField campoPercepcion;
     private javax.swing.JTextField campoSeleccionCliente;
@@ -1471,12 +1459,11 @@ public class Ventas1 extends javax.swing.JInternalFrame {
     campoDocVtaF.setText("");
     campoDocVtaI.setText("");
     campoDocVtaI.requestFocus();
-    
     }
 
     private void incrementaDoc() {
-        int correlativo = Integer.parseInt(campoDocVtaI.getText());
-        correlativo=correlativo+1;
+        int correlativo = parseInt(campoDocVtaI.getText());
+        correlativo += 1;
         campoDocVtaI.setText(""+correlativo);
         limpiarcamposTransaccionesCCF();
     }
@@ -1503,9 +1490,8 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         if(chkCCF.isSelected()){
             tipovta="CCF";
         }
-        Calendar now = Calendar.getInstance();
-		System.out.println("Fecha actual  " +(now.get(Calendar.MONTH) + 1));
-                System.out.println("mes venta   = " +(now.get(Calendar.MONTH)));
+        Calendar now = getInstance();
+		out.println("Fecha actual  " +(now.get(MONTH) + 1));
         try {//limpiando tabla ventas para CCF
            DefaultTableModel temp = (DefaultTableModel) tablaDatosIngresados.getModel();
            int a = temp.getRowCount();
@@ -1519,18 +1505,17 @@ public class Ventas1 extends javax.swing.JInternalFrame {
                 .setParameter("empresabuscar", idempresa)
                 .setParameter("tipovta", tipovta) ;
       List<Ventas> list=query.getResultList();
-        int mesDigitado = now.get(Calendar.MONTH);
+        int mesDigitado = now.get(MONTH);
       for(Ventas ventas:list)
       {
             Date fechaVenta = ventas.getFechaventa();
-            System.out.println(" fecha de venta es "+fechaVenta);
+            out.println(" fecha de venta es "+fechaVenta);
             int mesdig = fechaVenta.getMonth()+1;
-            System.out.println("mes de la venta es "+mesdig);
-            int mesVta=now.get(Calendar.MONTH);
+            int mesVta=now.get(MONTH);
             if(mesdig==12){
                 mesVta=12;
             }
-            System.out.println("MES ACTUAL ES "+mesVta);
+            out.println("MES ACTUAL ES "+mesVta);
             if(mesdig==mesVta)
             {
                 String idvta = ventas.getIdventa().toString();
@@ -1544,10 +1529,10 @@ public class Ventas1 extends javax.swing.JInternalFrame {
                 String percep1 = ventas.getValorventa().toString();
                 Object FilaElemento[] = {idvta, fechaVenta1, numDoc, tipoVta, grav, iva, percep, percep1 };
                 tablaFactura.addRow(FilaElemento);
-                totalIva=totalIva+Double.parseDouble(iva);
-                totalPercepcion=totalPercepcion+Double.parseDouble(percep);
-                totalVentas=totalVentas+Double.parseDouble(percep1);
-                totalGravado=totalGravado+Double.parseDouble(grav);
+                totalIva += parseDouble(iva);
+                totalPercepcion += parseDouble(percep);
+                totalVentas += parseDouble(percep1);
+                totalGravado += parseDouble(grav);
                 campoTotalGravado.setText(""+format("%.2f",totalGravado));
                 campoTotalIva.setText(""+format("%.2f",totalIva));
                 campoTotalPercepcion.setText(""+format("%.2f",totalPercepcion));
@@ -1574,4 +1559,12 @@ public class Ventas1 extends javax.swing.JInternalFrame {
     //campoDocVtaI.setText("");
     campoDocVtaI.requestFocus();
     }
+
+    private void irUltimoRegistro() {
+    // para presentar en tabla digitacion ultimo rec ingresado    
+    tablaDatosIngresados.scrollRectToVisible(tablaDatosIngresados.getCellRect(tablaDatosIngresados.getRowCount()-1, 0, true));
+
+}
+    private static final Logger LOG = Logger.getLogger(Ventas1.class.getName());
+
 }

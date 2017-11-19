@@ -3,6 +3,7 @@ package sv.com.pereira.gui;
 import com.placeholder.PlaceHolder;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import static java.lang.Integer.parseInt;
 import java.sql.Connection;
 import static java.sql.DriverManager.getConnection;
 import java.sql.PreparedStatement;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import static java.util.logging.Logger.getLogger;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.RowFilter;
 import static javax.swing.RowFilter.orFilter;
@@ -240,7 +241,7 @@ public class HistoricoCompras extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         int filaSelecc = tablaEmpresas.getSelectedRow();
         if(filaSelecc==-1){
-            JOptionPane.showMessageDialog(this, "Seleccione Empresa");
+            showMessageDialog(this, "Seleccione Empresa");
             return;
         }
         
@@ -310,14 +311,14 @@ public class HistoricoCompras extends javax.swing.JInternalFrame {
     private javax.swing.JTable tablaEmpresas;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
-    private static final Logger LOG = Logger.getLogger(HistoricoCompras.class.getName());
+    private static final Logger LOG = getLogger(HistoricoCompras.class.getName());
 
     private void verCompras() {
         
         int anno = annoSelect.getYear();
         int filaEmpresa = tablaEmpresas.getSelectedRow();
         String idempresa = tablaEmpresas.getValueAt(filaEmpresa, 0).toString();
-        int idEmpresa1 = Integer.parseInt(idempresa);
+        int idEmpresa1 = parseInt(idempresa);
        Connection conn = null;
         PreparedStatement prepSt = null;
         Statement st = null;
@@ -337,16 +338,16 @@ public class HistoricoCompras extends javax.swing.JInternalFrame {
             JasperViewer viewer = new JasperViewer(jasperPrint, false);
             viewer.toFront();
             viewer.setTitle("Reporte Compras");
-            viewer.setSize(1100, 600);
+            viewer.setSize(1_100, 600);
             viewer.setVisible(true);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this,"No encuentro archivo de Reporte");
+            showMessageDialog(this,"No encuentro archivo de Reporte");
         }
         try {
             //database.desconectar();
             conn.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this,"Error en Base de datos");
+            showMessageDialog(this,"Error en Base de datos");
         }  
     }
 
@@ -355,7 +356,7 @@ public class HistoricoCompras extends javax.swing.JInternalFrame {
         int anno = annoSelect.getYear();
         int filaEmpresa = tablaEmpresas.getSelectedRow();
         String idempresa = tablaEmpresas.getValueAt(filaEmpresa, 0).toString();
-        int idEmpresa1 = Integer.parseInt(idempresa);
+        int idEmpresa1 = parseInt(idempresa);
         Connection conn = null;
         PreparedStatement prepSt = null;
         Statement st = null;
@@ -375,16 +376,16 @@ public class HistoricoCompras extends javax.swing.JInternalFrame {
             JasperViewer viewer = new JasperViewer(jasperPrint, false);
             viewer.toFront();
             viewer.setTitle("Reporte Consumidor Final");
-            viewer.setSize(1100, 600);
+            viewer.setSize(1_100, 600);
             viewer.setVisible(true);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this,"No encuentro archivo de Reporte");
+            showMessageDialog(this,"No encuentro archivo de Reporte");
         }
         try {
             //database.desconectar();
             conn.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this,"Error en Base de datos");
+            showMessageDialog(this,"Error en Base de datos");
         }   
     }
 
@@ -393,7 +394,7 @@ public class HistoricoCompras extends javax.swing.JInternalFrame {
         int anno = annoSelect.getYear();
         int filaEmpresa = tablaEmpresas.getSelectedRow();
         String idempresa = tablaEmpresas.getValueAt(filaEmpresa, 0).toString();
-        int idEmpresa1 = Integer.parseInt(idempresa);
+        int idEmpresa1 = parseInt(idempresa);
         Connection conn = null;
         PreparedStatement prepSt = null;
         Statement st = null;
@@ -413,16 +414,16 @@ public class HistoricoCompras extends javax.swing.JInternalFrame {
             JasperViewer viewer = new JasperViewer(jasperPrint, false);
             viewer.toFront();
             viewer.setTitle("Reporte Ventas a Contribuyentes");
-            viewer.setSize(1100, 600);
+            viewer.setSize(1_100, 600);
             viewer.setVisible(true);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this,"No encuentro archivo de Reporte");
+            showMessageDialog(this,"No encuentro archivo de Reporte");
         }
         try {
             //database.desconectar();
             conn.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this,"Error en Base de datos");
+            showMessageDialog(this,"Error en Base de datos");
         } 
     }
 

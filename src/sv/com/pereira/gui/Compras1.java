@@ -6,7 +6,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.VK_ENTER;
 import static java.lang.Double.parseDouble;
+import static java.lang.Integer.parseInt;
 import static java.lang.String.format;
+import static java.lang.System.out;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import static java.sql.DriverManager.getConnection;
@@ -18,18 +20,21 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import static java.util.Calendar.MONTH;
+import static java.util.Calendar.YEAR;
+import static java.util.Calendar.getInstance;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
+import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
+import static java.util.logging.Logger.getLogger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import static javax.persistence.Persistence.createEntityManagerFactory;
 import javax.persistence.Query;
-import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.RowFilter;
 import static javax.swing.RowFilter.orFilter;
@@ -717,7 +722,6 @@ public class Compras1 extends javax.swing.JInternalFrame {
 
     private void btnVerCotizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCotizacionActionPerformed
     
-
     }//GEN-LAST:event_btnVerCotizacionActionPerformed
 
     @SuppressWarnings("empty-statement")
@@ -726,13 +730,11 @@ public class Compras1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnVerCotizacionKeyPressed
 
     private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
-        // TODO add your handling code here:
-
+        
     }//GEN-LAST:event_formInternalFrameClosed
 
     private void campoDocVtaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDocVtaKeyTyped
-        // TODO add your handling code here:
-         
+       
     }//GEN-LAST:event_campoDocVtaKeyTyped
 
     private void campoGravadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoGravadoKeyTyped
@@ -742,12 +744,12 @@ public class Compras1 extends javax.swing.JInternalFrame {
         int filaEmpresas = tablaEmpresas.getSelectedRow();
         int filaClientes = tablaProveedor.getSelectedRow();
         if(filaEmpresas==-1){
-           JOptionPane.showMessageDialog(this,"Seleccione empresa");
+            showMessageDialog(this,"Seleccione empresa");
            limpiarcamposTransacciones();
            return;
        }
         if(filaClientes==-1){
-            JOptionPane.showMessageDialog(this,"Seleccione Proveedor");
+            showMessageDialog(this,"Seleccione Proveedor");
            limpiarcamposTransacciones();
            return; 
         }
@@ -773,12 +775,12 @@ public class Compras1 extends javax.swing.JInternalFrame {
         EntityManager em = emf.createEntityManager();
         int fila = tablaEmpresas.getSelectedRow();
         if(fila==-1){
-           JOptionPane.showMessageDialog(this,"Seleccione empresa");
+            showMessageDialog(this,"Seleccione empresa");
            limpiarcamposTransacciones();
            return;
         }
         if (campoDocVta.getText().isEmpty()){
-             JOptionPane.showMessageDialog(this,"Ingrese numero de Comprobante Crédito");
+             showMessageDialog(this,"Ingrese numero de Comprobante Crédito");
            return;
         }
             
@@ -786,16 +788,15 @@ public class Compras1 extends javax.swing.JInternalFrame {
         Compras compras = new Compras();
         int filaClientes = tablaProveedor.getSelectedRow();
         String idclientes = tablaProveedor.getValueAt(filaClientes, 0).toString();
-        int idProvee = Integer.parseInt(idclientes);
+        int idProvee = parseInt(idclientes);
         Clientes proveeid = em.find(Clientes.class,idProvee );
         compras.setIdproveedor(proveeid);
         int filaEmpresa = tablaEmpresas.getSelectedRow();
-        System.out.println("fila seleccionada es "+filaEmpresa);
+        out.println("fila seleccionada es "+filaEmpresa);
         String idempresabuscar = tablaEmpresas.getValueAt(filaEmpresa, 0).toString();
-        int idempresa1 = Integer.parseInt(idempresabuscar);
-        System.out.println("Id de empresa a buscar es "+idempresa1);
+        int idempresa1 = parseInt(idempresabuscar);
         Empresas empresaid=em.find(Empresas.class, idempresa1);
-        System.out.println("empresa encontrada es "+empresaid.getIdempresa());
+        out.println("empresa encontrada es "+empresaid.getIdempresa());
         compras.setIdempresa(empresaid);
         compras.setGravado(new BigDecimal(campoGravado.getText()));
         compras.setValorcompra(new BigDecimal(campoTotalVta.getText()));
@@ -811,14 +812,13 @@ public class Compras1 extends javax.swing.JInternalFrame {
             em.persist(compras);
             tx.commit();
         } catch (Exception e) {
-            e.printStackTrace();
         tx.rollback();
         }
         limpiarcamposTransacciones();
         try {
             cargarDatadigitada();
         } catch (ParseException ex) {
-            Logger.getLogger(Compras1.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(Compras1.class.getName()).log(SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnGuardarCompraActionPerformed
 
@@ -912,11 +912,11 @@ public class Compras1 extends javax.swing.JInternalFrame {
         EntityManager em = emf.createEntityManager();
         int fila = tablaDatosIngresados.getSelectedRow();
         if(fila==-1){
-            JOptionPane.showMessageDialog(this,"Seleccione Transaccion a ELIMINAR");
+            showMessageDialog(this,"Seleccione Transaccion a ELIMINAR");
             return;
         }
         String idVta = tablaDatosIngresados.getValueAt(fila, 0).toString();
-        int idVta1 = Integer.parseInt(idVta);
+        int idVta1 = parseInt(idVta);
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try {
@@ -924,7 +924,6 @@ public class Compras1 extends javax.swing.JInternalFrame {
         em.remove(ventaBorrar);
             tx.commit();
          } catch (Exception e){
-            e.printStackTrace();
             tx.rollback();
          }finally{
             em.close();
@@ -933,7 +932,7 @@ public class Compras1 extends javax.swing.JInternalFrame {
             try {
                 cargarDatadigitada();
             } catch (ParseException ex) {
-                Logger.getLogger(Compras1.class.getName()).log(Level.SEVERE, null, ex);
+                getLogger(Compras1.class.getName()).log(SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnEliminarTransaccActionPerformed
@@ -941,22 +940,21 @@ public class Compras1 extends javax.swing.JInternalFrame {
     private void btnComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprasActionPerformed
         int fila = tablaEmpresas.getSelectedRow();
         int filaData = tablaDatosIngresados.getRowCount();
-        System.out.println("las compras de esta empresa son... "+filaData);
         if(fila==-1){
-            JOptionPane.showMessageDialog(this,"Seleccione Empresa");
+            showMessageDialog(this,"Seleccione Empresa");
             return;
         }
         if(filaData==-1){
-            JOptionPane.showMessageDialog(this,"NO Hay Compras para esta Empresa");
+            showMessageDialog(this,"NO Hay Compras para esta Empresa");
             return;
         }
         String idEmpresa = tablaEmpresas.getValueAt(fila, 0).toString();
-        int idEmpresa1 = Integer.parseInt(idEmpresa);        
-        Calendar now = Calendar.getInstance();
-        int mes = now.get(Calendar.MONTH);// verificar cuando la pc este en mes 12
-        mes=mes+1;
-        System.out.println("muestra el mes "+mes);
-        int anno = now.get(Calendar.YEAR);
+        int idEmpresa1 = parseInt(idEmpresa);        
+        Calendar now = getInstance();
+        int mes = now.get(MONTH);// verificar cuando la pc este en mes 12
+        mes += 1;
+        out.println("muestra el mes "+mes);
+        int anno = now.get(YEAR);
         Connection conn = null;
         PreparedStatement prepSt = null;
         Statement st = null;
@@ -976,16 +974,16 @@ public class Compras1 extends javax.swing.JInternalFrame {
             JasperViewer viewer = new JasperViewer(jasperPrint, false);
             viewer.toFront();
             viewer.setTitle("Reporte Compras");
-            viewer.setSize(1100, 600);
+            viewer.setSize(1_100, 600);
             viewer.setVisible(true);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this,"No encuentro archivo de Reporte");
+            showMessageDialog(this,"No encuentro archivo de Reporte");
         }
         try {
             //database.desconectar();
             conn.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this,"Error en Base de datos");
+            showMessageDialog(this,"Error en Base de datos");
         }
        
     }//GEN-LAST:event_btnComprasActionPerformed
@@ -1092,8 +1090,6 @@ public class Compras1 extends javax.swing.JInternalFrame {
     campoDocVta.requestFocus();
     }
 
- 
-
     private void cargarDatadigitada() throws ParseException {
         EntityManagerFactory emf = createEntityManagerFactory("ContadorPU");
         EntityManager em = emf.createEntityManager();
@@ -1109,7 +1105,7 @@ public class Compras1 extends javax.swing.JInternalFrame {
         DefaultTableModel tablaFactura1 = (DefaultTableModel) tablaDatosIngresados.getModel();
         tablaDatosIngresados.setFont(new java.awt.Font("Tahoma", 0, 9));
         String tipovta = "CCF";
-        Calendar now = Calendar.getInstance();
+        Calendar now = getInstance();
         try {//limpiando tabla ventas para CCF
            DefaultTableModel temp = (DefaultTableModel) tablaDatosIngresados.getModel();
            int a = temp.getRowCount();
@@ -1124,7 +1120,7 @@ public class Compras1 extends javax.swing.JInternalFrame {
                 //.setParameter("tipovta", tipovta) ;
                 
         List<Compras> list=query.getResultList();
-        int mesActual = now.get(Calendar.MONTH)+1;//obtengo el mes actual
+        int mesActual = now.get(MONTH)+1;//obtengo el mes actual
         for(Compras compras:list)
         {   
             Timestamp mesDigitado = new Timestamp(compras.getFechadigitado().getTime());// fecha de escritura en Dbs
@@ -1132,7 +1128,6 @@ public class Compras1 extends javax.swing.JInternalFrame {
             int mescompra1 = mescompra+1;// igualo mes compra a mes digitacion
             if(mesActual==mescompra1)
             {
-                System.out.println("numero doc"+compras.getNumdoc());
                 String idcompra = compras.getIdcompra().toString();
                 //String nomEmpresa = compras.getIdempresa().getNombre();
                 String nomProvee = compras.getIdproveedor().getNombre();
@@ -1144,10 +1139,10 @@ public class Compras1 extends javax.swing.JInternalFrame {
                 String fechaCompra = compras.getFechacompra().toGMTString();
                 Object FilaElemento[] = {idcompra, nomProvee, numDoc, fechaCompra, grav, iva, percep, percep1 };
                 tablaFactura.addRow(FilaElemento);
-                totalIva=totalIva+Double.parseDouble(iva);
-                totalPercepcion=totalPercepcion+Double.parseDouble(percep);
-                totalVentas=totalVentas+Double.parseDouble(percep1);
-                totalGravado=totalGravado+Double.parseDouble(grav);
+                totalIva += parseDouble(iva);
+                totalPercepcion += parseDouble(percep);
+                totalVentas += parseDouble(percep1);
+                totalGravado += parseDouble(grav);
                 campoTotalGravado.setText(""+format("%.2f",totalGravado));
                 campoTotalIva.setText(""+format("%.2f",totalIva));
                 campoTotalPercepcion.setText(""+format("%.2f",totalPercepcion));
@@ -1209,4 +1204,5 @@ public class Compras1 extends javax.swing.JInternalFrame {
              campoTotalVta.setText("" + format("%.2f", ventaTotal));
         }
     }
+    private static final Logger LOG = Logger.getLogger(Compras1.class.getName());
 }

@@ -5,16 +5,22 @@ import com.placeholder.PlaceHolder;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.VK_ENTER;
+import static java.beans.Beans.isDesignTime;
 import java.util.ArrayList;
+import static java.util.Collections.emptyList;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import static javax.persistence.Persistence.createEntityManagerFactory;
-import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.RowFilter;
 import static javax.swing.RowFilter.orFilter;
 import static javax.swing.RowFilter.regexFilter;
 import javax.swing.table.TableRowSorter;
+import static org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE;
+import static org.jdesktop.beansbinding.ELProperty.create;
+import static org.jdesktop.swingbinding.SwingBindings.createJTableBinding;
 import pojos.Clientes;
 import static sv.com.pereira.gui.Principal.jDesktopPane1;
 
@@ -436,22 +442,22 @@ public class ClientesToVentas extends javax.swing.JInternalFrame {
         EntityManagerFactory emf = createEntityManagerFactory("ContadorPU");
         EntityManager em = emf.createEntityManager();
         if(campoNombre.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Nombre Empresa NO puede ser vacio");
+            showMessageDialog(this, "Nombre Empresa NO puede ser vacio");
             campoNombre.requestFocus();
             return;
         }
         if(campoGiro.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Giro NO puede ser vacio");
+            showMessageDialog(this, "Giro NO puede ser vacio");
             campoGiro.requestFocus();
             return;
         }
         if(campoNIT.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "NIT NO puede ser vacio");
+            showMessageDialog(this, "NIT NO puede ser vacio");
             campoNIT.requestFocus();
             return;
         }
         if(campoNCR.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "NCR  NO puede ser vacio");
+            showMessageDialog(this, "NCR  NO puede ser vacio");
             campoNCR.requestFocus();
             return;
         }
@@ -513,40 +519,42 @@ public class ClientesToVentas extends javax.swing.JInternalFrame {
     private void actualizarTablaEmpresas() {
        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        ContadorPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("ContadorPU").createEntityManager();
+        ContadorPUEntityManager = isDesignTime() ? null : createEntityManagerFactory("ContadorPU").createEntityManager();
         grupoTipoVtas = new javax.swing.ButtonGroup();
-        clientesQuery = java.beans.Beans.isDesignTime() ? null : ContadorPUEntityManager.createQuery("SELECT c FROM Clientes c");
-        clientesList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clientesQuery.getResultList();
+        clientesQuery = isDesignTime() ? null : ContadorPUEntityManager.createQuery("SELECT c FROM Clientes c");
+        clientesList = isDesignTime() ? emptyList() : clientesQuery.getResultList();
        
         tablaContribuyentes = new javax.swing.JTable();
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, clientesList, tablaContribuyentes);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idclien}"));
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = createJTableBinding(READ_WRITE, clientesList, tablaContribuyentes);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(create("${idclien}"));
         columnBinding.setColumnName("Idclien");
         columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nombre}"));
+        columnBinding = jTableBinding.addColumnBinding(create("${nombre}"));
         columnBinding.setColumnName("Nombre");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${giro}"));
+        columnBinding = jTableBinding.addColumnBinding(create("${giro}"));
         columnBinding.setColumnName("Giro");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nrc}"));
+        columnBinding = jTableBinding.addColumnBinding(create("${nrc}"));
         columnBinding.setColumnName("Nrc");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nit}"));
+        columnBinding = jTableBinding.addColumnBinding(create("${nit}"));
         columnBinding.setColumnName("Nit");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${gcontrib}"));
+        columnBinding = jTableBinding.addColumnBinding(create("${gcontrib}"));
         columnBinding.setColumnName("Gcontrib");
         columnBinding.setColumnClass(Boolean.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         tablaContribuyentes.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaContribuyentesMouseClicked(evt);
             }
         });
         tablaContribuyentes.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tablaContribuyentesKeyPressed(evt);
             }
@@ -572,6 +580,7 @@ public class ClientesToVentas extends javax.swing.JInternalFrame {
        campoNombre.setText("");
        chkGContrib.setSelected(false);
     }
+    private static final Logger LOG = Logger.getLogger(ClientesToVentas.class.getName());
 }
 
   

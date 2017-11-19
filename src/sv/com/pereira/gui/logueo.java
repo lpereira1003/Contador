@@ -14,7 +14,6 @@ import java.net.UnknownHostException;
 import java.sql.Connection;
 import static java.sql.DriverManager.getConnection;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
@@ -23,13 +22,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import static javax.persistence.Persistence.createEntityManagerFactory;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.showMessageDialog;
 import static org.apache.commons.codec.digest.DigestUtils.md5Hex;
 import pojos.Pcs;
-import static sv.com.pereira.gui.Principal.campoUsuarioActivo;
 import pojos.Usuarios;
+import static sv.com.pereira.gui.Principal.campoUsuarioActivo;
 
 public class logueo extends javax.swing.JFrame {
 
@@ -58,9 +56,7 @@ public class logueo extends javax.swing.JFrame {
 
     public logueo() throws SocketException {
         initComponents();
-       // Image icon = getDefaultToolkit().getImage(getClass().getResource("/sv/com/pereira/gui/folderIco/marca1.png"));
-       // setIconImage(icon);
-
+      
          this.setLocationRelativeTo(null);
        }
    
@@ -226,7 +222,7 @@ public class logueo extends javax.swing.JFrame {
              }
             pcsmac = ""+sb;
         } catch (SocketException ex) {
-            JOptionPane.showMessageDialog(this, "Error de red");
+            showMessageDialog(this, "Error de red");
             //getLogger(logueo.class.getName()).log(SEVERE, null, ex);
         }
        List<Pcs>resultList1=em.createQuery("Select p from Pcs p",Pcs.class).getResultList();
@@ -278,7 +274,7 @@ public class logueo extends javax.swing.JFrame {
             flagAprobado=1;
             Principal principal=new Principal();
             principal.setVisible(true);
-            principal.campoUsuarioActivo.setText("Bienvenido/a a sus labores:.... ".concat(usuarioencontrado.getNombre()));
+            campoUsuarioActivo.setText("Bienvenido/a a sus labores:.... ".concat(usuarioencontrado.getNombre()));
             dispose();
         }else
         {
@@ -326,7 +322,7 @@ public class logueo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
-    private static final Logger LOG = Logger.getLogger(logueo.class.getName());
+    private static final Logger LOG = getLogger(logueo.class.getName());
  
  
 }

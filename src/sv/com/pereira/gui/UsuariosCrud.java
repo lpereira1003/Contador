@@ -4,9 +4,12 @@ import com.placeholder.PlaceHolder;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.VK_ENTER;
+import static java.beans.Beans.isDesignTime;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
+import static java.util.Collections.emptyList;
 import java.util.logging.Logger;
+import static java.util.logging.Logger.getLogger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -18,6 +21,9 @@ import static javax.swing.RowFilter.orFilter;
 import static javax.swing.RowFilter.regexFilter;
 import javax.swing.table.TableRowSorter;
 import static org.apache.commons.codec.digest.DigestUtils.md5Hex;
+import static org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE;
+import static org.jdesktop.beansbinding.ELProperty.create;
+import static org.jdesktop.swingbinding.SwingBindings.createJTableBinding;
 import pojos.Usuarios;
 
 public class UsuariosCrud extends javax.swing.JInternalFrame {
@@ -26,9 +32,6 @@ public class UsuariosCrud extends javax.swing.JInternalFrame {
         initComponents();
         PlaceHolder holder = new PlaceHolder(CampoNombreEmpleado, "Nombre de Usuario");
         PlaceHolder holder1 = new PlaceHolder(CampoUser, "Usuario Asignado");
-//        PlaceHolder holder2 = new PlaceHolder(campoPass1, "Contraseña");
-//        PlaceHolder holder3 = new PlaceHolder(campoPass2, "Reingrese Contrasena");
-        //PlaceHolder holder4 = new PlaceHolder(campoGravado, "Valor Monetario");
         tablaEmpleados.setAutoCreateRowSorter(true);//permite ordenar la tabla x cuaquier columna
      }
     @SuppressWarnings("unchecked")
@@ -346,8 +349,7 @@ public class UsuariosCrud extends javax.swing.JInternalFrame {
                em.remove(usuario);
                tx.commit();
             } catch (Exception e){
-               e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Error de Conexion");
+                showMessageDialog(this, "Error de Conexion");
                tx.rollback();
                return;
             } 
@@ -432,7 +434,7 @@ public class UsuariosCrud extends javax.swing.JInternalFrame {
                 } 
              int fila = tablaEmpleados.getSelectedRow();
              String idEmpleado1 = tablaEmpleados.getValueAt(fila, 0).toString();
-             int idEmpleadoInt = parseInt(idEmpleado1);;
+             int idEmpleadoInt = parseInt(idEmpleado1);
              Integer iduserfindInt = null;
              Usuarios usuario = em.find(Usuarios.class,idEmpleadoInt);
              usuario.setNombre(CampoNombreEmpleado.getText());
@@ -449,7 +451,6 @@ public class UsuariosCrud extends javax.swing.JInternalFrame {
                 em.persist(usuario);
                 tx.commit();
              } catch (Exception e) {
-                e.printStackTrace();
                 tx.rollback();
              }
              showMessageDialog(this, "Guardado correctamente");
@@ -497,7 +498,7 @@ TableRowSorter trs;
         EntityManager em = emf.createEntityManager();
         int fila = tablaEmpleados.getSelectedRow();
         String id = tablaEmpleados.getValueAt(fila, 0).toString();
-        int id1 = Integer.parseInt(id);
+        int id1 = parseInt(id);
         Usuarios usuario = em.find(Usuarios.class,id1);
         CampoNombreEmpleado.setText(usuario.getNombre());
     }//GEN-LAST:event_tablaEmpleadosMouseClicked
@@ -560,31 +561,33 @@ TableRowSorter trs;
     campoPass1.setText("");
     campoPass2.setText("");
     }
-    private static final Logger LOG = Logger.getLogger(UsuariosCrud.class.getName());
+    private static final Logger LOG = getLogger(UsuariosCrud.class.getName());
 
     private void actualizarTabla() {
          bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
-        ContadorPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("ContadorPU").createEntityManager();
-        usuariosQuery = java.beans.Beans.isDesignTime() ? null : ContadorPUEntityManager.createQuery("SELECT u FROM Usuarios u");
-        usuariosList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : usuariosQuery.getResultList();
+        ContadorPUEntityManager = isDesignTime() ? null : createEntityManagerFactory("ContadorPU").createEntityManager();
+        usuariosQuery = isDesignTime() ? null : ContadorPUEntityManager.createQuery("SELECT u FROM Usuarios u");
+        usuariosList = isDesignTime() ? emptyList() : usuariosQuery.getResultList();
         tablaEmpleados = new javax.swing.JTable();
         campoUsuario = new javax.swing.JTextField();
         tablaEmpleados.getTableHeader().setReorderingAllowed(false);
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, usuariosList, tablaEmpleados);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idusuario}"));
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = createJTableBinding(READ_WRITE, usuariosList, tablaEmpleados);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(create("${idusuario}"));
         columnBinding.setColumnName("Idusuario");
         columnBinding.setColumnClass(Integer.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nombre}"));
+        columnBinding = jTableBinding.addColumnBinding(create("${nombre}"));
         columnBinding.setColumnName("Nombre");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         tablaEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaEmpleadosMouseClicked(evt);
             }
+            @Override
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tablaEmpleadosMousePressed(evt);
             }

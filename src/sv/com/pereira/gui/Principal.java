@@ -1,13 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sv.com.pereira.gui;
 
 import static com.jtattoo.plaf.texture.TextureLookAndFeel.setTheme;
-import java.awt.Cursor;
 import java.awt.Desktop;
+import static java.awt.Desktop.Action.BROWSE;
+import static java.awt.Desktop.getDesktop;
+import static java.awt.Desktop.isDesktopSupported;
+import static java.awt.EventQueue.invokeLater;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +14,6 @@ import java.io.InputStreamReader;
 import static java.lang.System.exit;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import static java.util.Calendar.DAY_OF_MONTH;
@@ -26,7 +24,6 @@ import static java.util.Calendar.SECOND;
 import static java.util.Calendar.YEAR;
 import static java.util.Calendar.getInstance;
 import java.util.List;
-import java.util.logging.Level;
 import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
@@ -36,11 +33,10 @@ import static javax.swing.JFileChooser.DIRECTORIES_ONLY;
 import static javax.swing.JFileChooser.FILES_ONLY;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.showMessageDialog;
+import static javax.swing.UIManager.getInstalledLookAndFeels;
 import static javax.swing.UIManager.setLookAndFeel;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import net.sf.jasperreports.engine.JRException;
-import static net.sf.jasperreports.engine.util.JRLoader.loadObjectFromFile;
 
 public class Principal extends javax.swing.JFrame {
 
@@ -88,8 +84,6 @@ public class Principal extends javax.swing.JFrame {
         skin3 = new javax.swing.JMenuItem();
         skin4 = new javax.swing.JMenuItem();
         skin5 = new javax.swing.JMenuItem();
-        Ayuda = new javax.swing.JMenu();
-        video = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -447,18 +441,6 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(Skin);
 
-        Ayuda.setText("jMenu1");
-
-        video.setText("Video");
-        video.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                videoActionPerformed(evt);
-            }
-        });
-        Ayuda.add(video);
-
-        jMenuBar1.add(Ayuda);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -668,9 +650,9 @@ public class Principal extends javax.swing.JFrame {
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
        try {
-        if (Desktop.isDesktopSupported()) {
-            Desktop desktop = Desktop.getDesktop();
-        if (desktop.isSupported(Desktop.Action.BROWSE)) {
+        if (isDesktopSupported()) {
+            Desktop desktop = getDesktop();
+        if (desktop.isSupported(BROWSE)) {
             desktop.browse(new URI("https://www.facebook.com/pereiracomputerservices/"));
         }
         }
@@ -683,9 +665,9 @@ public class Principal extends javax.swing.JFrame {
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
         try {
-        if (Desktop.isDesktopSupported()) {
-            Desktop desktop = Desktop.getDesktop();
-        if (desktop.isSupported(Desktop.Action.BROWSE)) {
+        if (isDesktopSupported()) {
+            Desktop desktop = getDesktop();
+        if (desktop.isSupported(BROWSE)) {
             desktop.browse(new URI("https://www.google.com.sv/maps/place/Pereira+Computer+Services/@13.8040259,-88.1568606,16z/data=!4m12!1m6!3m5!1s0x0:0xa01accddfc546cef!2sPereira+Computer+Services!8m2!3d13.802213!4d-88.152451!3m4!1s0x0:0xa01accddfc546cef!8m2!3d13.802213!4d-88.152451"));
         }
         }
@@ -755,26 +737,9 @@ public class Principal extends javax.swing.JFrame {
 
     private void jLabel5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseEntered
         // TODO add your handling code here:
-        int HAND_CURSOR1 = Cursor.HAND_CURSOR;
+        int HAND_CURSOR1 = HAND_CURSOR;
         
     }//GEN-LAST:event_jLabel5MouseEntered
-
-    private void videoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_videoActionPerformed
-        // TODO add your handling code here:
-//        URI url =URI.create("\\Reportes\\pvsys20.mp4");
-            Runtime obj = Runtime.getRuntime(); 
- 
-        try {
-            // obj.exec("C:\\Program Files (x86)\\Windows Media Player\\wmplayer.exe");
-            //loadObjectFromFile("Reportes\\ComprasGlobales.jasper");
-//                String ruta = "Reportes\\pvsys20.mp4";
-        Process name = obj.exec("C:\\Program Files (x86)\\Windows Media Player\\wmplayer.exe C:\\Users\\Master-Pc\\Documents\\NetBeansProjects\\Contador\\Reportes\\pvsys20.mp4");
-        } catch (IOException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-       
-    }//GEN-LAST:event_videoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -786,28 +751,22 @@ public class Principal extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            for (javax.swing.UIManager.LookAndFeelInfo info : getInstalledLookAndFeels()) {
                 if ("Metal".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            getLogger(Principal.class.getName()).log(SEVERE, null, ex);
         }
+        //</editor-fold>
+        
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Principal().setVisible(true);
-            }
+        invokeLater(() -> {
+            new Principal().setVisible(true);
         });
     }
 
@@ -815,7 +774,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem AdminTributos;
     private javax.swing.JMenuItem AdminUsuarios;
     private javax.swing.JMenu Administracion;
-    private javax.swing.JMenu Ayuda;
     private javax.swing.JMenuItem ClienteNuevo;
     private javax.swing.JMenu Clientes;
     private javax.swing.JMenu Datos;
@@ -846,7 +804,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem skin3;
     private javax.swing.JMenuItem skin4;
     private javax.swing.JMenuItem skin5;
-    private javax.swing.JMenuItem video;
     // End of variables declaration//GEN-END:variables
 
        private void skin2() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
@@ -871,4 +828,5 @@ public class Principal extends javax.swing.JFrame {
         setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
             setTheme("", "PCS", "PCS");
   }
+    private static final Logger LOG = Logger.getLogger(Principal.class.getName());
 }

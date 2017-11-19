@@ -1,6 +1,8 @@
 package sv.com.pereira.gui;
 
+import static java.lang.Double.parseDouble;
 import java.util.logging.Logger;
+import static java.util.logging.Logger.getLogger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import static javax.persistence.Persistence.createEntityManagerFactory;
@@ -9,7 +11,7 @@ import pojos.Impuestos;
 
  class Tributos extends javax.swing.JInternalFrame {
     
-    public Tributos() {
+    Tributos() {
         initComponents();
         EntityManagerFactory emf = createEntityManagerFactory("ContadorPU");
         EntityManager em = emf.createEntityManager();
@@ -227,12 +229,12 @@ import pojos.Impuestos;
             try {
                 // escribiendo on DB
                 em.getTransaction().begin();
-                tributos.setIva(Double.parseDouble(campoIVA.getText()));
-                tributos.setConversion(Double.parseDouble(campoFactor.getText()));
-                tributos.setPercepcion(Double.parseDouble(campoPercepcion.getText()));
+                tributos.setIva(parseDouble(campoIVA.getText()));
+                tributos.setConversion(parseDouble(campoFactor.getText()));
+                tributos.setPercepcion(parseDouble(campoPercepcion.getText()));
                 em.getTransaction().commit();
                 em.persist(tributos);
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
             em.getTransaction().rollback();
             } finally {               
                 em.close();
@@ -258,5 +260,5 @@ import pojos.Impuestos;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
-    private static final Logger LOG = Logger.getLogger(Tributos.class.getName());
+    private static final Logger LOG = getLogger(Tributos.class.getName());
  }
