@@ -5,6 +5,8 @@
  */
 package sv.com.pereira.gui;
 
+import static com.jtattoo.plaf.texture.TextureLookAndFeel.setTheme;
+import java.awt.Cursor;
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,6 +15,7 @@ import java.io.InputStreamReader;
 import static java.lang.System.exit;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import static java.util.Calendar.DAY_OF_MONTH;
@@ -23,19 +26,28 @@ import static java.util.Calendar.SECOND;
 import static java.util.Calendar.YEAR;
 import static java.util.Calendar.getInstance;
 import java.util.List;
+import java.util.logging.Level;
+import static java.util.logging.Level.SEVERE;
+import java.util.logging.Logger;
+import static java.util.logging.Logger.getLogger;
 import javax.swing.JFileChooser;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
 import static javax.swing.JFileChooser.DIRECTORIES_ONLY;
 import static javax.swing.JFileChooser.FILES_ONLY;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.showMessageDialog;
+import static javax.swing.UIManager.setLookAndFeel;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import net.sf.jasperreports.engine.JRException;
+import static net.sf.jasperreports.engine.util.JRLoader.loadObjectFromFile;
 
 public class Principal extends javax.swing.JFrame {
 
    
     public Principal() {
         initComponents();
+       
         this.setLocationRelativeTo(null); //centarando en pantalla
     }
 
@@ -43,7 +55,6 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuItem4 = new javax.swing.JMenuItem();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -51,6 +62,8 @@ public class Principal extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        campoUsuarioActivo = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         Sistema = new javax.swing.JMenu();
         SistemaSalir = new javax.swing.JMenuItem();
@@ -59,26 +72,30 @@ public class Principal extends javax.swing.JFrame {
         DatosCompras = new javax.swing.JMenuItem();
         Empresas = new javax.swing.JMenu();
         EmpresasNueva = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
         Clientes = new javax.swing.JMenu();
         ClienteNuevo = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
         Administracion = new javax.swing.JMenu();
         AdminUsuarios = new javax.swing.JMenuItem();
         AdminTributos = new javax.swing.JMenuItem();
         Respaldos = new javax.swing.JMenuItem();
         Restauracion = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        comprasGlob = new javax.swing.JMenuItem();
-
-        jMenuItem4.setText("jMenuItem4");
+        Historicos = new javax.swing.JMenu();
+        MovMensuales = new javax.swing.JMenuItem();
+        MovAnuales = new javax.swing.JMenuItem();
+        Skin = new javax.swing.JMenu();
+        skin1 = new javax.swing.JMenuItem();
+        skin2 = new javax.swing.JMenuItem();
+        skin3 = new javax.swing.JMenuItem();
+        skin4 = new javax.swing.JMenuItem();
+        skin5 = new javax.swing.JMenuItem();
+        Ayuda = new javax.swing.JMenu();
+        video = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jDesktopPane1.setName(""); // NOI18N
-        jDesktopPane1.setPreferredSize(new java.awt.Dimension(1024, 789));
+        jDesktopPane1.setPreferredSize(new java.awt.Dimension(1050, 800));
+        jDesktopPane1.setRequestFocusEnabled(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 0, 0));
@@ -96,6 +113,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Localizanos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logoGoogleMaps.jpg"))); // NOI18N
+        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);
@@ -104,9 +122,13 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logoFB.png"))); // NOI18N
         jLabel5.setToolTipText("");
+        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel5MouseEntered(evt);
             }
         });
 
@@ -117,60 +139,81 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addGap(20, 20, 20))
+                .addGap(22, 22, 22))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
+
+        campoUsuarioActivo.setEditable(false);
+        campoUsuarioActivo.setBackground(new java.awt.Color(102, 255, 102));
+        campoUsuarioActivo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        campoUsuarioActivo.setForeground(new java.awt.Color(0, 0, 255));
+        campoUsuarioActivo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        campoUsuarioActivo.setToolTipText("");
+
+        jLabel6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 0, 51));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Con la Asesoría Contable de: Leticia Urquilla");
 
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(campoUsuarioActivo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                        .addContainerGap()
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(4, 4, 4))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1062, Short.MAX_VALUE)
                             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 984, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                                .addGap(245, 245, 245)
+                                .addComponent(campoUsuarioActivo)
+                                .addGap(231, 231, 231))
+                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addGap(410, 410, 410)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(campoUsuarioActivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(290, 290, 290)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         Sistema.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -253,9 +296,6 @@ public class Principal extends javax.swing.JFrame {
         });
         Empresas.add(EmpresasNueva);
 
-        jMenuItem1.setText("jMenuItem1");
-        Empresas.add(jMenuItem1);
-
         jMenuBar1.add(Empresas);
 
         Clientes.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -265,7 +305,7 @@ public class Principal extends javax.swing.JFrame {
         Clientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Clientes.setPreferredSize(new java.awt.Dimension(100, 20));
 
-        ClienteNuevo.setText("Clientes");
+        ClienteNuevo.setText("Nuevo");
         ClienteNuevo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         ClienteNuevo.setPreferredSize(new java.awt.Dimension(100, 25));
         ClienteNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -274,9 +314,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         Clientes.add(ClienteNuevo);
-
-        jMenuItem2.setText("jMenuItem2");
-        Clientes.add(jMenuItem2);
 
         jMenuBar1.add(Clientes);
 
@@ -327,32 +364,100 @@ public class Principal extends javax.swing.JFrame {
         });
         Administracion.add(Restauracion);
 
-        jMenuItem3.setText("jMenuItem3");
-        Administracion.add(jMenuItem3);
-
         jMenuBar1.add(Administracion);
 
-        jMenu1.setText("Historicos");
-        jMenu1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jMenu1.setPreferredSize(new java.awt.Dimension(120, 20));
+        Historicos.setText("Historicos");
+        Historicos.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        Historicos.setPreferredSize(new java.awt.Dimension(120, 20));
 
-        jMenuItem5.setText("Mov Mensuales");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        MovMensuales.setText("Mov Mensuales");
+        MovMensuales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                MovMensualesActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem5);
+        Historicos.add(MovMensuales);
 
-        comprasGlob.setText("Mov. Anuales");
-        comprasGlob.addActionListener(new java.awt.event.ActionListener() {
+        MovAnuales.setText("Mov. Anuales");
+        MovAnuales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comprasGlobActionPerformed(evt);
+                MovAnualesActionPerformed(evt);
             }
         });
-        jMenu1.add(comprasGlob);
+        Historicos.add(MovAnuales);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(Historicos);
+
+        Skin.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        Skin.setMnemonic('k');
+        Skin.setText("Skin");
+        Skin.setDelay(100);
+        Skin.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        Skin.setMaximumSize(new java.awt.Dimension(100, 32767));
+        Skin.setPreferredSize(new java.awt.Dimension(50, 42));
+
+        skin1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        skin1.setText("Skin1");
+        skin1.setPreferredSize(new java.awt.Dimension(215, 42));
+        skin1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                skin1ActionPerformed(evt);
+            }
+        });
+        Skin.add(skin1);
+
+        skin2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        skin2.setText("Skin2");
+        skin2.setPreferredSize(new java.awt.Dimension(215, 42));
+        skin2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                skin2ActionPerformed(evt);
+            }
+        });
+        Skin.add(skin2);
+
+        skin3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        skin3.setText("Skin3");
+        skin3.setPreferredSize(new java.awt.Dimension(215, 42));
+        skin3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                skin3ActionPerformed(evt);
+            }
+        });
+        Skin.add(skin3);
+
+        skin4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        skin4.setText("Skin4");
+        skin4.setPreferredSize(new java.awt.Dimension(215, 42));
+        skin4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                skin4ActionPerformed(evt);
+            }
+        });
+        Skin.add(skin4);
+
+        skin5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        skin5.setText("Skin5");
+        skin5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                skin5ActionPerformed(evt);
+            }
+        });
+        Skin.add(skin5);
+
+        jMenuBar1.add(Skin);
+
+        Ayuda.setText("jMenu1");
+
+        video.setText("Video");
+        video.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                videoActionPerformed(evt);
+            }
+        });
+        Ayuda.add(video);
+
+        jMenuBar1.add(Ayuda);
 
         setJMenuBar(jMenuBar1);
 
@@ -360,18 +465,18 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1082, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 2, Short.MAX_VALUE))
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jDesktopPane1.getAccessibleContext().setAccessibleName("");
 
-        pack();
+        setBounds(0, 0, 1098, 730);
     }// </editor-fold>//GEN-END:initComponents
 
     private void SistemaSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SistemaSalirActionPerformed
@@ -443,7 +548,7 @@ public class Principal extends javax.swing.JFrame {
         usuariosCrud.toFront();
     }//GEN-LAST:event_AdminUsuariosActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void MovMensualesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovMensualesActionPerformed
         // TODO add your handling code here:
         ReportesHist reportesHist = new ReportesHist();
         jDesktopPane1.add(reportesHist);
@@ -455,7 +560,7 @@ public class Principal extends javax.swing.JFrame {
         reportesHist.setResizable(true);
         reportesHist.toFront();
         
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_MovMensualesActionPerformed
 
     private void AdminTributosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdminTributosActionPerformed
         // TODO add your handling code here:
@@ -589,7 +694,7 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabel4MouseClicked
 
-    private void comprasGlobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comprasGlobActionPerformed
+    private void MovAnualesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovAnualesActionPerformed
         // TODO add your handling code here:
            HistoricoCompras historicoCompras = new HistoricoCompras();
         jDesktopPane1.add(historicoCompras);
@@ -601,7 +706,75 @@ public class Principal extends javax.swing.JFrame {
         historicoCompras.setResizable(true);
         historicoCompras.toFront();
         
-    }//GEN-LAST:event_comprasGlobActionPerformed
+    }//GEN-LAST:event_MovAnualesActionPerformed
+
+    private void skin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skin1ActionPerformed
+//        try {
+//            // TODO add your handling code here:
+//            skin1();
+//        } catch (IllegalAccessException | UnsupportedLookAndFeelException ex) {
+//            getLogger(Principal.class.getName()).log(SEVERE, null, ex);
+//        }
+    }//GEN-LAST:event_skin1ActionPerformed
+
+    private void skin2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skin2ActionPerformed
+        try {
+            // TODO add your handling code here:
+            skin2();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            getLogger(Principal.class.getName()).log(SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_skin2ActionPerformed
+
+    private void skin3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skin3ActionPerformed
+        try {
+            // TODO add your handling code here:
+            skin3();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            getLogger(Principal.class.getName()).log(SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_skin3ActionPerformed
+
+    private void skin4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skin4ActionPerformed
+        try {
+            skin4();
+            // TODO add your handling code here:
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            getLogger(Principal.class.getName()).log(SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_skin4ActionPerformed
+
+    private void skin5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skin5ActionPerformed
+        try {
+            // TODO add your handling code here:
+            skin5();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            getLogger(Principal.class.getName()).log(SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_skin5ActionPerformed
+
+    private void jLabel5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseEntered
+        // TODO add your handling code here:
+        int HAND_CURSOR1 = Cursor.HAND_CURSOR;
+        
+    }//GEN-LAST:event_jLabel5MouseEntered
+
+    private void videoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_videoActionPerformed
+        // TODO add your handling code here:
+//        URI url =URI.create("\\Reportes\\pvsys20.mp4");
+            Runtime obj = Runtime.getRuntime(); 
+ 
+        try {
+            // obj.exec("C:\\Program Files (x86)\\Windows Media Player\\wmplayer.exe");
+            //loadObjectFromFile("Reportes\\ComprasGlobales.jasper");
+//                String ruta = "Reportes\\pvsys20.mp4";
+        Process name = obj.exec("C:\\Program Files (x86)\\Windows Media Player\\wmplayer.exe C:\\Users\\Master-Pc\\Documents\\NetBeansProjects\\Contador\\Reportes\\pvsys20.mp4");
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+       
+    }//GEN-LAST:event_videoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -642,6 +815,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem AdminTributos;
     private javax.swing.JMenuItem AdminUsuarios;
     private javax.swing.JMenu Administracion;
+    private javax.swing.JMenu Ayuda;
     private javax.swing.JMenuItem ClienteNuevo;
     private javax.swing.JMenu Clientes;
     private javax.swing.JMenu Datos;
@@ -649,24 +823,52 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem DatosVentas;
     private javax.swing.JMenu Empresas;
     private javax.swing.JMenuItem EmpresasNueva;
+    private javax.swing.JMenu Historicos;
+    private javax.swing.JMenuItem MovAnuales;
+    private javax.swing.JMenuItem MovMensuales;
     private javax.swing.JMenuItem Respaldos;
     private javax.swing.JMenuItem Restauracion;
     private javax.swing.JMenu Sistema;
     private javax.swing.JMenuItem SistemaSalir;
-    private javax.swing.JMenuItem comprasGlob;
+    public javax.swing.JMenu Skin;
+    public static javax.swing.JTextField campoUsuarioActivo;
     public static javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JMenu jMenu1;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenuItem skin1;
+    private javax.swing.JMenuItem skin2;
+    private javax.swing.JMenuItem skin3;
+    private javax.swing.JMenuItem skin4;
+    private javax.swing.JMenuItem skin5;
+    private javax.swing.JMenuItem video;
     // End of variables declaration//GEN-END:variables
+
+       private void skin2() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+        // code look&feel
+        setLookAndFeel("com.jtattoo.plaf.fast.FastLookAndFeel");
+        setTheme("", "PCS", "PCS");
+    }
+
+    private void skin3() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+        //code look&feel
+        setLookAndFeel("com.jtattoo.plaf.graphite.GraphiteLookAndFeel");
+          setTheme("", "PCS", "PCS");
+         }
+
+    private void skin4() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+        //code look&feel
+        setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
+         setTheme("", "PCS", "PCS");
+ }
+
+    private void skin5() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+        setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
+            setTheme("", "PCS", "PCS");
+  }
 }

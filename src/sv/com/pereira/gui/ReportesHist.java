@@ -140,6 +140,7 @@ public class ReportesHist extends javax.swing.JInternalFrame {
         });
 
         grupoLibros.add(chkVtasConsuFinal);
+        chkVtasConsuFinal.setSelected(true);
         chkVtasConsuFinal.setText("Libro Vtas. Consum. Final");
 
         grupoLibros.add(chkVtasContribuyente);
