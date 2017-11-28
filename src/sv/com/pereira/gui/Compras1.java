@@ -2,6 +2,7 @@ package sv.com.pereira.gui;
 
 
 import com.placeholder.PlaceHolder;
+import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.VK_ENTER;
@@ -51,7 +52,6 @@ import pojos.Clientes;
 import pojos.Compras;
 import pojos.Empresas;
 import pojos.Impuestos;
-import pojos.Ventas;
 import static sv.com.pereira.gui.Principal.jDesktopPane1;
 
 public class Compras1 extends javax.swing.JInternalFrame {
@@ -60,7 +60,7 @@ public class Compras1 extends javax.swing.JInternalFrame {
         PlaceHolder holder = new PlaceHolder(campoSeleccionEmpresa, "Nombre de Empresa o NRC");
         PlaceHolder holder1 = new PlaceHolder(campoSeleccionCliente, "Nombre de Proveedor o NRC");
         PlaceHolder holder2 = new PlaceHolder(campoBuscoTransaccion, "# de Documento");
-        PlaceHolder holder3 = new PlaceHolder(campoDocVta, "# Documento de Venta");
+        PlaceHolder holder3 = new PlaceHolder(campoDocVta, "# Documento de Compra");
         //PlaceHolder holder4 = new PlaceHolder(campoGravado, "Valor Monetario");
         Date fechaDiditacion = new Date();
         fechador.setDate(fechaDiditacion);
@@ -78,7 +78,7 @@ public class Compras1 extends javax.swing.JInternalFrame {
         clientesList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clientesQuery.getResultList();
         grupoTipoVtas = new javax.swing.ButtonGroup();
         jCalendar1 = new com.toedter.calendar.JCalendar();
-        jLabel1 = new javax.swing.JLabel();
+        lblPpal = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaEmpresas = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -160,13 +160,13 @@ public class Compras1 extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Ingresando Compras");
-        jLabel1.setToolTipText("");
-        jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 255, 51), null));
-        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblPpal.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        lblPpal.setForeground(new java.awt.Color(0, 0, 255));
+        lblPpal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPpal.setText("Ingresando Compras");
+        lblPpal.setToolTipText("");
+        lblPpal.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 255, 51), null));
+        lblPpal.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, empresasList, tablaEmpresas);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idempresa}"));
@@ -422,6 +422,14 @@ public class Compras1 extends javax.swing.JInternalFrame {
 
         campoPercepcion.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         campoPercepcion.setText("0.00");
+        campoPercepcion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoPercepcionKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoPercepcionKeyTyped(evt);
+            }
+        });
 
         btnGuardarCompra.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         btnGuardarCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar.png"))); // NOI18N
@@ -431,37 +439,38 @@ public class Compras1 extends javax.swing.JInternalFrame {
                 btnGuardarCompraActionPerformed(evt);
             }
         });
+        btnGuardarCompra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnGuardarCompraKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblPercepcion)
-                                    .addComponent(jLabel14)
-                                    .addComponent(lbl_iva))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(campoTotalVta)
-                                    .addComponent(campoPercepcion)
-                                    .addComponent(CampoIva)))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblGravado_total)
-                                    .addComponent(jLabel10))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(campoGravado)
-                                    .addComponent(campoDocVta)))))
+                            .addComponent(lblGravado_total)
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(campoGravado)
+                            .addComponent(campoDocVta)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnGuardarCompra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblPercepcion)
+                            .addComponent(jLabel14)
+                            .addComponent(lbl_iva))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnGuardarCompra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(campoTotalVta)
+                            .addComponent(campoPercepcion)
+                            .addComponent(CampoIva))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -489,7 +498,7 @@ public class Compras1 extends javax.swing.JInternalFrame {
                     .addComponent(campoTotalVta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addComponent(btnGuardarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         panelconfigProceso.setBackground(new java.awt.Color(51, 153, 255));
@@ -514,7 +523,7 @@ public class Compras1 extends javax.swing.JInternalFrame {
                         .addGroup(panelconfigProcesoLayout.createSequentialGroup()
                             .addGroup(panelconfigProcesoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(calendario, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE))
+                                .addComponent(calendario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGap(11, 11, 11))
                         .addGroup(panelconfigProcesoLayout.createSequentialGroup()
                             .addGap(195, 195, 195)
@@ -628,7 +637,7 @@ public class Compras1 extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblPpal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -670,14 +679,14 @@ public class Compras1 extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addComponent(lblPpal)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblDataIng, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(campoSeleccionEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -685,7 +694,7 @@ public class Compras1 extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(panelconfigProceso, javax.swing.GroupLayout.PREFERRED_SIZE, 241, Short.MAX_VALUE)
+                            .addComponent(panelconfigProceso, javax.swing.GroupLayout.PREFERRED_SIZE, 262, Short.MAX_VALUE)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -712,7 +721,7 @@ public class Compras1 extends javax.swing.JInternalFrame {
                 .addGap(25, 25, 25))
         );
 
-        jLabel1.getAccessibleContext().setAccessibleName("Ventas");
+        lblPpal.getAccessibleContext().setAccessibleName("Ventas");
 
         bindingGroup.bind();
 
@@ -775,14 +784,24 @@ public class Compras1 extends javax.swing.JInternalFrame {
         EntityManager em = emf.createEntityManager();
         int fila = tablaEmpresas.getSelectedRow();
         if(fila==-1){
-            showMessageDialog(this,"Seleccione empresa");
+           showMessageDialog(this,"Seleccione empresa");
            limpiarcamposTransacciones();
+           btnGuardarCompra.setBackground(Color.lightGray);
            return;
         }
         if (campoDocVta.getText().isEmpty()){
              showMessageDialog(this,"Ingrese numero de Comprobante Crédito");
+             btnGuardarCompra.setBackground(Color.lightGray);
+           return;
+        }if (campoGravado.getText().isEmpty()){
+             showMessageDialog(this,"Ingrese compra NETA");
+             btnGuardarCompra.setBackground(Color.lightGray);
            return;
         }
+        if(campoPercepcion.getText().isEmpty()){
+            campoPercepcion.setText("0.00");
+        }
+        
             
       //Escribir compras
         Compras compras = new Compras();
@@ -801,6 +820,7 @@ public class Compras1 extends javax.swing.JInternalFrame {
         compras.setGravado(new BigDecimal(campoGravado.getText()));
         compras.setValorcompra(new BigDecimal(campoTotalVta.getText()));
         compras.setValoriva(new BigDecimal(CampoIva.getText()));
+       
         compras.setValorpercibe(new BigDecimal(campoPercepcion.getText()));
         compras.setFechacompra(calendario.getDate());
         //compras.setFechadigitado(new Date());
@@ -820,6 +840,9 @@ public class Compras1 extends javax.swing.JInternalFrame {
         } catch (ParseException ex) {
             getLogger(Compras1.class.getName()).log(SEVERE, null, ex);
         }
+        int lineasTablaData = tablaDatosIngresados.getRowCount();
+        tablaDatosIngresados.getSelectionModel().setSelectionInterval(lineasTablaData-1,lineasTablaData-1);
+        campoPercepcion.setBackground(Color.lightGray);
     }//GEN-LAST:event_btnGuardarCompraActionPerformed
 
     private void campoSeleccionEmpresaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoSeleccionEmpresaKeyTyped
@@ -880,8 +903,23 @@ public class Compras1 extends javax.swing.JInternalFrame {
 
     private void campoGravadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoGravadoKeyPressed
         // TODO add your handling code here:
+        int filaProveedor = tablaProveedor.getSelectedRow();
+        if(filaProveedor<0){
+             showMessageDialog(this,"Seleccione Proveedor");
+             return;
+        }
+        String proveedorGC = tablaProveedor.getValueAt(filaProveedor, 3).toString();
          if(evt.getKeyCode()==VK_ENTER) {
-            btnGuardarCompra.requestFocus();
+             if(proveedorGC.equals("true")){
+                 campoPercepcion.requestFocus();
+                 campoPercepcion.setBackground(Color.green);
+                 campoPercepcion.setText("");
+             }else
+             {
+               btnGuardarCompra.requestFocus();
+            btnGuardarCompra.setBackground(Color.green);  
+             }
+            
         }
     }//GEN-LAST:event_campoGravadoKeyPressed
 
@@ -920,8 +958,8 @@ public class Compras1 extends javax.swing.JInternalFrame {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try {
-        Ventas ventaBorrar = em.find(Ventas.class, idVta1);
-        em.remove(ventaBorrar);
+        Compras comprasBorrar = em.find(Compras.class, idVta1);
+        em.remove(comprasBorrar);
             tx.commit();
          } catch (Exception e){
             tx.rollback();
@@ -1022,6 +1060,48 @@ public class Compras1 extends javax.swing.JInternalFrame {
         proveedoresToCompras1.toFront();
     }//GEN-LAST:event_btnNuevoClienteActionPerformed
 
+    private void btnGuardarCompraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuardarCompraKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==VK_ENTER) {
+            btnGuardarCompra.doClick();
+            btnGuardarCompra.setBackground(Color.lightGray);
+        }         
+    }//GEN-LAST:event_btnGuardarCompraKeyPressed
+
+    private void campoPercepcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercepcionKeyTyped
+        // TODO add your handling code here:
+          campoPercepcion.addKeyListener(new KeyAdapter() 
+        {
+            @Override
+            
+            public void keyReleased(final KeyEvent e) {
+                double ventaTotal = 0.00;
+                double gravado = 0.00;
+                if(campoPercepcion.getText().isEmpty()){
+                    return;
+                }
+                String gravado1 = campoGravado.getText();
+                gravado=Double.parseDouble(gravado1);
+                String percepcion1 = campoPercepcion.getText();
+                
+                double percepcion = Double.parseDouble(percepcion1);
+                String iva1 = CampoIva.getText();
+                double iva = Double.parseDouble(iva1);
+                                      
+                       ventaTotal=gravado+iva+percepcion;
+                       campoTotalVta.setText(""+ventaTotal);
+            }
+        });
+          
+    }//GEN-LAST:event_campoPercepcionKeyTyped
+
+    private void campoPercepcionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercepcionKeyPressed
+         if(evt.getKeyCode()==VK_ENTER) {
+             btnGuardarCompra.requestFocus();
+            btnGuardarCompra.setBackground(Color.green);
+             }
+    }//GEN-LAST:event_campoPercepcionKeyPressed
+
     TableRowSorter trs;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CampoIva;
@@ -1050,7 +1130,6 @@ public class Compras1 extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser fechador;
     private javax.swing.ButtonGroup grupoTipoVtas;
     private com.toedter.calendar.JCalendar jCalendar1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1073,6 +1152,7 @@ public class Compras1 extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblDataIng;
     private javax.swing.JLabel lblGravado_total;
     private javax.swing.JLabel lblPercepcion;
+    private javax.swing.JLabel lblPpal;
     private javax.swing.JLabel lbl_iva;
     private javax.swing.JPanel panelconfigProceso;
     private javax.swing.JTable tablaDatosIngresados;
@@ -1098,6 +1178,7 @@ public class Compras1 extends javax.swing.JInternalFrame {
         DefaultTableModel tablaFactura = (DefaultTableModel) tablaDatosIngresados.getModel();
         String nombreEmpresa = tablaEmpresas.getValueAt(filaempresa, 1).toString();
         lblDataIng.setText("Datos Ingresados a:  ".concat(nombreEmpresa));
+         lblPpal.setText("Procesando Compras a: >> ".concat(nombreEmpresa));
         double totalPercepcion = 0.00;
         double totalIva = 0.00;
         double totalVentas = 0.00;
@@ -1173,16 +1254,23 @@ public class Compras1 extends javax.swing.JInternalFrame {
       // if(campo.getText().isEmpty())return;
         double gravado = parseDouble(campoGravado.getText());
         double iva = parseDouble(CampoIva.getText());
+        if(campoPercepcion.getText().isEmpty()){
+            campoPercepcion.setText("0.0");
+        }
         percepcion = parseDouble(campoPercepcion.getText());
+        
         double ventaTotal = parseDouble(campoTotalVta.getText());
         int filaProveedor = tablaProveedor.getSelectedRow();
         String gContrProveedor1 = tablaProveedor.getValueAt(filaProveedor, 3).toString();
         String gContrEmpresa = tablaEmpresas.getValueAt(filaEmpresas, 3).toString();
         if((gContrEmpresa.equals("false")&& gContrProveedor1.equals("true")) && gravado>=100.00 ){
-          percepcion=gravado*valorPercepcion;
+         // percepcion=gravado*valorPercepcion;
           iva=gravado*valorIVA;
-          ventaTotal=gravado+iva+percepcion;
+          ventaTotal=gravado+iva;//+percepcion;
           CampoIva.setText("" + format("%.2f", iva));
+          if(campoPercepcion.getText().isEmpty()){
+              campoPercepcion.setText("0.0");
+          }
           campoPercepcion.setText("" + format("%.2f", percepcion));
           campoTotalVta.setText("" + format("%.2f", ventaTotal));
         }else
@@ -1198,10 +1286,13 @@ public class Compras1 extends javax.swing.JInternalFrame {
         {
             percepcion=0.00;
             iva=gravado*valorIVA;
-            ventaTotal=gravado+iva+percepcion;
+            ventaTotal=gravado+iva;//+percepcion;
+            if(campoPercepcion.getText().isEmpty()){
+              campoPercepcion.setText("0.0");
+            }
             CampoIva.setText("" + format("%.2f", iva));
-             campoPercepcion.setText("" + format("%.2f", percepcion));
-             campoTotalVta.setText("" + format("%.2f", ventaTotal));
+            campoPercepcion.setText("" + format("%.2f", percepcion));
+            campoTotalVta.setText("" + format("%.2f", ventaTotal));
         }
     }
     private static final Logger LOG = Logger.getLogger(Compras1.class.getName());

@@ -2,6 +2,7 @@ package sv.com.pereira.gui;
 
 
 import com.placeholder.PlaceHolder;
+import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.VK_ENTER;
@@ -271,6 +272,11 @@ public class Contribuyentes extends javax.swing.JInternalFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
+        btnGuardar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnGuardarKeyPressed(evt);
+            }
+        });
 
         btnSalir.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/home.png"))); // NOI18N
@@ -495,6 +501,7 @@ public class Contribuyentes extends javax.swing.JInternalFrame {
                tx.rollback();
             }
             limpiarCampos();
+            btnGuardar.setBackground(Color.lightGray);
         }
         em.close();
         actualizarTablaEmpresas();
@@ -507,6 +514,14 @@ public class Contribuyentes extends javax.swing.JInternalFrame {
     private void rbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbModificarActionPerformed
         limpiarCampos();
     }//GEN-LAST:event_rbModificarActionPerformed
+
+    private void btnGuardarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuardarKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==VK_ENTER) {
+            btnGuardar.doClick();
+            
+        }
+    }//GEN-LAST:event_btnGuardarKeyPressed
 
     TableRowSorter trs;
     // Variables declaration - do not modify//GEN-BEGIN:variables

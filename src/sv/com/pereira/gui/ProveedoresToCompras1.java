@@ -2,6 +2,7 @@ package sv.com.pereira.gui;
 
 
 import com.placeholder.PlaceHolder;
+import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.VK_ENTER;
@@ -198,6 +199,12 @@ public class ProveedoresToCompras1 extends javax.swing.JInternalFrame {
             }
         });
 
+        campoNCR.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoNCRKeyPressed(evt);
+            }
+        });
+
         chkGContrib.setText("Gran Contribuyente?");
 
         javax.swing.GroupLayout PanelIngresaDataLayout = new javax.swing.GroupLayout(PanelIngresaData);
@@ -262,6 +269,11 @@ public class ProveedoresToCompras1 extends javax.swing.JInternalFrame {
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
+            }
+        });
+        btnGuardar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnGuardarKeyPressed(evt);
             }
         });
 
@@ -486,6 +498,20 @@ public class ProveedoresToCompras1 extends javax.swing.JInternalFrame {
     private void rbNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbNuevaActionPerformed
         limpiarCampos();
     }//GEN-LAST:event_rbNuevaActionPerformed
+
+    private void campoNCRKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNCRKeyPressed
+      if(evt.getKeyCode()==VK_ENTER) {
+            btnGuardar.requestFocus();
+            btnGuardar.setBackground(Color.green);
+        }  // TODO add your handling code here:
+    }//GEN-LAST:event_campoNCRKeyPressed
+
+    private void btnGuardarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuardarKeyPressed
+         if(evt.getKeyCode()==VK_ENTER) {
+            btnGuardar.doClick();
+            btnGuardar.setBackground(Color.green);
+         }
+    }//GEN-LAST:event_btnGuardarKeyPressed
 
     TableRowSorter trs;
     // Variables declaration - do not modify//GEN-BEGIN:variables

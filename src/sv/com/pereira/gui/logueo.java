@@ -1,5 +1,6 @@
 package sv.com.pereira.gui;
 
+import java.awt.Color;
 import static java.awt.EventQueue.invokeLater;
 import static java.awt.event.KeyEvent.VK_ENTER;
 import static java.lang.Class.forName;
@@ -105,6 +106,11 @@ public class logueo extends javax.swing.JFrame {
         btnIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnIngresarActionPerformed(evt);
+            }
+        });
+        btnIngresar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnIngresarKeyPressed(evt);
             }
         });
 
@@ -282,6 +288,7 @@ public class logueo extends javax.swing.JFrame {
             campoUsuario.setText("");
             campoPassword.setText("");
             campoUsuario.requestFocus();
+            btnIngresar.setBackground(Color.LIGHT_GRAY);
         }//** FIN COMPARANDO BANDERAS DE ACCESO
     }//GEN-LAST:event_btnIngresarActionPerformed
 
@@ -296,12 +303,22 @@ public class logueo extends javax.swing.JFrame {
     private void campoPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPasswordKeyPressed
          if(evt.getKeyCode()==VK_ENTER) {
              btnIngresar.requestFocus();
+             btnIngresar.setBackground(Color.green);
          }
     }//GEN-LAST:event_campoPasswordKeyPressed
 
     private void campoUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoUsuarioKeyTyped
-       
+     
     }//GEN-LAST:event_campoUsuarioKeyTyped
+
+    private void btnIngresarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnIngresarKeyPressed
+        // TODO add your handling code here:
+          if(evt.getKeyCode()==VK_ENTER) {
+             btnIngresar.doClick();
+            // btnIngresar.setBackground(Color.green);
+         }
+        
+    }//GEN-LAST:event_btnIngresarKeyPressed
 
   
     public static void main(String args[]) {
