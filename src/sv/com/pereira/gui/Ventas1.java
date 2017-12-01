@@ -867,7 +867,8 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         System.out.println("mes digitacion.. "+mesdigita);
         if(mesActual==mesdigita){
             JOptionPane.showMessageDialog(this,"Ha ingresado una venta anticipada..... \n"
-                                             + "La transaccion sera mostrada en mes... " +ventaAnticipada);
+                                             + "Verifiquelo en Reporte Histórico...... \n"                                             
+                                             + "La transaccion sera mostrada si PC = mes .. " +ventaAnticipada);
             //limpiarcamposTransacciones();
         }
         

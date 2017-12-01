@@ -5,6 +5,8 @@
  */
 package pojos;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -17,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -36,6 +39,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Empresas.findByGcontrib", query = "SELECT e FROM Empresas e WHERE e.gcontrib = :gcontrib")
     , @NamedQuery(name = "Empresas.findByIdempresa", query = "SELECT e FROM Empresas e WHERE e.idempresa = :idempresa")})
 public class Empresas implements Serializable {
+
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
     private static final long serialVersionUID = 1L;
     @Column(name = "nombre")
@@ -70,7 +76,9 @@ public class Empresas implements Serializable {
     }
 
     public void setNombre(String nombre) {
+        String oldNombre = this.nombre;
         this.nombre = nombre;
+        changeSupport.firePropertyChange("nombre", oldNombre, nombre);
     }
 
     public String getGiro() {
@@ -78,7 +86,9 @@ public class Empresas implements Serializable {
     }
 
     public void setGiro(String giro) {
+        String oldGiro = this.giro;
         this.giro = giro;
+        changeSupport.firePropertyChange("giro", oldGiro, giro);
     }
 
     public String getNit() {
@@ -86,7 +96,9 @@ public class Empresas implements Serializable {
     }
 
     public void setNit(String nit) {
+        String oldNit = this.nit;
         this.nit = nit;
+        changeSupport.firePropertyChange("nit", oldNit, nit);
     }
 
     public String getNcr() {
@@ -94,7 +106,9 @@ public class Empresas implements Serializable {
     }
 
     public void setNcr(String ncr) {
+        String oldNcr = this.ncr;
         this.ncr = ncr;
+        changeSupport.firePropertyChange("ncr", oldNcr, ncr);
     }
 
     public Boolean getGcontrib() {
@@ -102,7 +116,9 @@ public class Empresas implements Serializable {
     }
 
     public void setGcontrib(Boolean gcontrib) {
+        Boolean oldGcontrib = this.gcontrib;
         this.gcontrib = gcontrib;
+        changeSupport.firePropertyChange("gcontrib", oldGcontrib, gcontrib);
     }
 
     public Integer getIdempresa() {
@@ -110,7 +126,9 @@ public class Empresas implements Serializable {
     }
 
     public void setIdempresa(Integer idempresa) {
+        Integer oldIdempresa = this.idempresa;
         this.idempresa = idempresa;
+        changeSupport.firePropertyChange("idempresa", oldIdempresa, idempresa);
     }
 
     @XmlTransient
@@ -154,6 +172,14 @@ public class Empresas implements Serializable {
     @Override
     public String toString() {
         return "pojos.Empresas[ idempresa=" + idempresa + " ]";
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }
