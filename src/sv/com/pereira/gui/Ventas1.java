@@ -860,6 +860,7 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         Calendar now = Calendar.getInstance();
         int mesActual = now.get(Calendar.MONTH)+1;
         int ventaAnticipada = mesActual+1;
+        //if(ventaAnticipada==13)ventaAnticipada=01;
         int anno = now.get(Calendar.YEAR);
         int mesdigita = calendario.getDate().getMonth()+1;
         System.out.println("mes en la pc.... "+mesActual);
@@ -867,7 +868,7 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         if(mesActual==mesdigita){
             JOptionPane.showMessageDialog(this,"Ha ingresado una venta anticipada..... \n"
                                              + "La transaccion sera mostrada en mes... " +ventaAnticipada);
-            limpiarcamposTransacciones();
+            //limpiarcamposTransacciones();
         }
         
         Ventas ventas = new Ventas();
@@ -1092,7 +1093,13 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         int idEmpresa1 = Integer.parseInt(idEmpresa);        
         Calendar now = Calendar.getInstance();
         int mes = now.get(Calendar.MONTH);
+        System.out.println("mes para reporte es.. "+mes);
         int anno = now.get(Calendar.YEAR);
+        if(mes==0){
+            anno=anno-1;
+            System.out.println("nuevo ano mificado= "+anno);
+        }
+        System.out.println("ano para REPORTE es .. "+anno);
         Connection conn = null;
         PreparedStatement prepSt = null;
         Statement st = null;
@@ -1291,11 +1298,14 @@ public class Ventas1 extends javax.swing.JInternalFrame {
       {
             Date fechaVenta = ventas.getFechaventa();
             System.out.println(" fecha de venta es "+fechaVenta);
-            int mesdid = fechaVenta.getMonth()+1;
-            System.out.println("mes de la venta es "+mesdid);
+            int mesdig = fechaVenta.getMonth()+1;
+            System.out.println("mes de la venta es "+mesdig);
             int mesVta=now.get(Calendar.MONTH);
+            if(mesdig==12){
+                mesVta=12;
+            }
             System.out.println("MES ACTUAL ES "+mesVta);
-            if(mesdid==mesVta)
+            if(mesdig==mesVta)
             {
                 String idvta = ventas.getIdventa().toString();
                 String nomEmpresa = ventas.getIdempresa().getNombre();
