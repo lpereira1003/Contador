@@ -1101,7 +1101,7 @@ public class Ventas1 extends javax.swing.JInternalFrame {
             System.out.println("nuevo ano mificado.... = "+anno);
             System.out.println("Nuevo MES modificado.. = "+mes);
         }
-        System.out.println("ano para REPORTE es .. "+anno);
+        //System.out.println("ano para REPORTE es .. "+anno);
         Connection conn = null;
         PreparedStatement prepSt = null;
         Statement st = null;
