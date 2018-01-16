@@ -387,7 +387,7 @@
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="8" rowCount="4">
                 <Column editable="false" title="idVta" type="java.lang.Object"/>
-                <Column editable="false" title="Empresa" type="java.lang.Object"/>
+                <Column editable="false" title="Proveedor" type="java.lang.Object"/>
                 <Column editable="false" title="#Doc" type="java.lang.Object"/>
                 <Column editable="false" title="F.Compra" type="java.lang.Object"/>
                 <Column editable="false" title="Grav" type="java.lang.Object"/>
@@ -610,6 +610,9 @@
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoTotalGravadoKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="campoTotalPercepcion">
           <Properties>
@@ -765,6 +768,7 @@
             <Property name="horizontalAlignment" type="int" value="4"/>
           </Properties>
           <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoDocVtaKeyPressed"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoDocVtaKeyTyped"/>
           </Events>
         </Component>

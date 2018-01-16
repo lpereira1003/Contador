@@ -237,7 +237,7 @@ public class Compras1 extends javax.swing.JInternalFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "idVta", "Empresa", "#Doc", "F.Compra", "Grav", "IVA", "Percep", "total Vta"
+                "idVta", "Proveedor", "#Doc", "F.Compra", "Grav", "IVA", "Percep", "total Vta"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -300,6 +300,11 @@ public class Compras1 extends javax.swing.JInternalFrame {
         campoTotalIva.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
         campoTotalGravado.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        campoTotalGravado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoTotalGravadoKeyPressed(evt);
+            }
+        });
 
         campoTotalPercepcion.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
@@ -380,6 +385,9 @@ public class Compras1 extends javax.swing.JInternalFrame {
 
         campoDocVta.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         campoDocVta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoDocVtaKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campoDocVtaKeyTyped(evt);
             }
@@ -899,14 +907,20 @@ public class Compras1 extends javax.swing.JInternalFrame {
 
     private void btnComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprasActionPerformed
         int fila = tablaEmpresas.getSelectedRow();
+        int filaData = tablaDatosIngresados.getRowCount();
+        System.out.println("las compras de esta empresa son... "+filaData);
         if(fila==-1){
             JOptionPane.showMessageDialog(this,"Seleccione Empresa");
+            return;
+        }
+        if(filaData==-1){
+            JOptionPane.showMessageDialog(this,"NO Hay Compras para esta Empresa");
             return;
         }
         String idEmpresa = tablaEmpresas.getValueAt(fila, 0).toString();
         int idEmpresa1 = Integer.parseInt(idEmpresa);        
         Calendar now = Calendar.getInstance();
-        int mes = now.get(Calendar.MONTH);
+        int mes = now.get(Calendar.MONTH);// verificar cuando la pc este en mes 12
         mes=mes+1;
         System.out.println("muestra el mes "+mes);
         int anno = now.get(Calendar.YEAR);
@@ -952,6 +966,19 @@ public class Compras1 extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         hacemeCalculos();
     }//GEN-LAST:event_tablaProveedorMouseClicked
+
+    private void campoDocVtaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDocVtaKeyPressed
+        if(evt.getKeyCode()==VK_ENTER) {
+            campoGravado.requestFocus();
+        }  
+        
+
+// TODO add your handling code here:
+    }//GEN-LAST:event_campoDocVtaKeyPressed
+
+    private void campoTotalGravadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoTotalGravadoKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoTotalGravadoKeyPressed
 
     TableRowSorter trs;
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1010,11 +1037,12 @@ public class Compras1 extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void limpiarcamposTransacciones() {
+    //campoDocVta.setText("");
     CampoIva.setText("0.00");
     campoGravado.setText("");
     campoTotalVta.setText("0.00");
     campoPercepcion.setText("0.00");
-    campoGravado.requestFocus();
+    campoDocVta.requestFocus();
     }
 
  
@@ -1049,11 +1077,11 @@ public class Compras1 extends javax.swing.JInternalFrame {
                 //.setParameter("tipovta", tipovta) ;
                 
         List<Compras> list=query.getResultList();
-        int mesActual = now.get(Calendar.MONTH)+1;
+        int mesActual = now.get(Calendar.MONTH)+1;//obtengo el mes actual
         for(Compras compras:list)
         {   
-            Timestamp mesDigitado = new Timestamp(compras.getFechadigitado().getTime());
-            int mescompra = mesDigitado.getMonth();
+            Timestamp mesDigitado = new Timestamp(compras.getFechadigitado().getTime());// fecha de escritura en Dbs
+            int mescompra = mesDigitado.getMonth();// mes de digitacion
             int mescompra1 = mescompra+1;// igualo mes compra a mes digitacion
             if(mesActual==mescompra1)
             {
