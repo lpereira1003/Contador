@@ -1097,7 +1097,9 @@ public class Ventas1 extends javax.swing.JInternalFrame {
         int anno = now.get(Calendar.YEAR);
         if(mes==0){
             anno=anno-1;
-            System.out.println("nuevo ano mificado= "+anno);
+            mes=12;
+            System.out.println("nuevo ano mificado.... = "+anno);
+            System.out.println("Nuevo MES modificado.. = "+mes);
         }
         System.out.println("ano para REPORTE es .. "+anno);
         Connection conn = null;
